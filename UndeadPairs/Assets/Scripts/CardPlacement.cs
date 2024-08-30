@@ -34,7 +34,7 @@ public class CardPlacement : MonoBehaviour
         // Disable cards at start
         foreach (Transform child in transform)
         {
-            child.gameObject.SetActive(false);
+            //child.gameObject.SetActive(false);
         }
 
         // Card drop
