@@ -56,9 +56,7 @@ public class CardFlip : MonoBehaviour
 
     private void OnMouseUpAsButton()
     {
-        Debug.Log($"Card clicked: {gameObject.name}, Collider Enabled: {GetComponent<Collider>().enabled}");
-
-        if (!isAnimating)
+        if (!isAnimating && flippedCards.Count < maxFlippedCards)
         {
             FlipCard(!isFlipped);
         }
@@ -66,54 +64,53 @@ public class CardFlip : MonoBehaviour
 
     public void FlipCard(bool toFlipped)
     {
-        if (toFlipped != isFlipped)
+        if (toFlipped == isFlipped || isAnimating)
         {
-            if (toFlipped)
+            return;
+        }
+
+        if (toFlipped)
+        {
+            if (flippedCards.Count == 0)
             {
-                if (flippedCards.Count == 0)
+                GetComponent<Collider>().enabled = false;
+            }
+            else if (flippedCards.Count == 1)
+            {
+                flippedCards[0].GetComponent<Collider>().enabled = true;
+                foreach (var card in FindObjectsOfType<CardFlip>())
                 {
-                    GetComponent<Collider>().enabled = false;
-                }
-                else if (flippedCards.Count == 1)
-                {
-                    flippedCards[0].GetComponent<Collider>().enabled = true;
-
-                    foreach (var card in FindObjectsOfType<CardFlip>())
+                    if (!flippedCards.Contains(card))
                     {
-                        if (!flippedCards.Contains(card))
-                        {
-                            card.GetComponent<Collider>().enabled = false;
-                        }
+                        card.GetComponent<Collider>().enabled = false;
                     }
+                }
+                GetComponent<Collider>().enabled = true;
+            }
 
-                    GetComponent<Collider>().enabled = true;
-                }
-
-                if (flippedCards.Count < maxFlippedCards)
-                {
-                    flippedCards.Add(this);
-                }
-                else
-                {
-                    return;
-                }
+            if (flippedCards.Count < maxFlippedCards)
+            {
+                flippedCards.Add(this);
             }
             else
             {
-                flippedCards.Remove(this);
-
-                if (flippedCards.Count == 0)
+                return;
+            }
+        }
+        else
+        {
+            flippedCards.Remove(this);
+            if (flippedCards.Count == 0)
+            {
+                foreach (var card in FindObjectsOfType<CardFlip>())
                 {
-                    foreach (var card in FindObjectsOfType<CardFlip>())
-                    {
-                        card.GetComponent<Collider>().enabled = true;
-                    }
+                    card.GetComponent<Collider>().enabled = true;
                 }
             }
-
-            StopAllCoroutines();
-            StartCoroutine(FlipAnimation(toFlipped));
         }
+
+        StopAllCoroutines();
+        StartCoroutine(FlipAnimation(toFlipped));
     }
 
     private IEnumerator FlipAnimation(bool toFlipped)
@@ -130,7 +127,6 @@ public class CardFlip : MonoBehaviour
         float normalizedX = (gridPosition.x - centerX) / centerX;
         float normalizedY = (gridPosition.y - centerY) / centerY;
 
-        // Reversed nudge directions due to camera rotation
         nudgeDirection.x = normalizedX * nudgeAmount;
         nudgeDirection.y = normalizedY * nudgeAmount;
 
@@ -192,5 +188,85 @@ public class CardFlip : MonoBehaviour
 
         isFlipped = toFlipped;
         isAnimating = false;
+
+        if (toFlipped)
+        {
+            if (flippedCards.Count == maxFlippedCards)
+            {
+                StartCoroutine(CheckForMatch());
+            }
+        }
+    }
+
+    private IEnumerator CheckForMatch()
+    {
+        yield return new WaitForSeconds(0.5f); // Wait for animations to complete
+
+        if (flippedCards.Count != maxFlippedCards)
+        {
+            Debug.LogWarning("Unexpected number of flipped cards: " + flippedCards.Count);
+            yield break;
+        }
+
+        CardFlip card1 = flippedCards[0];
+        CardFlip card2 = flippedCards[1];
+
+        Material material1 = card1.GetCardMaterial();
+        Material material2 = card2.GetCardMaterial();
+
+        // Check if materials are found
+        if (material1 == null || material2 == null)
+        {
+            Debug.LogError("One or both materials are missing.");
+            yield break;
+        }
+
+        // Compare material names instead of material instances
+        bool isMatch = material1.name == material2.name;
+        Debug.Log($"Card 1 Material Name: {material1.name}, Card 2 Material Name: {material2.name}");
+
+        if (isMatch)
+        {
+            Debug.Log("Cards match!");
+            Destroy(card1.gameObject);
+            Destroy(card2.gameObject);
+
+            // Ensure all remaining cards are clickable again
+            EnableAllCardColliders();
+        }
+        else
+        {
+            Debug.Log("Cards do not match.");
+            card1.FlipCard(false);
+            card2.FlipCard(false);
+
+            // Ensure all remaining cards are clickable again
+            EnableAllCardColliders();
+        }
+
+        flippedCards.Clear();
+    }
+
+    private void EnableAllCardColliders()
+    {
+        foreach (CardFlip card in FindObjectsOfType<CardFlip>())
+        {
+            card.GetComponent<Collider>().enabled = true;
+        }
+    }
+
+    private Material GetCardMaterial()
+    {
+        Transform cardFront = transform.Find("CardFront");
+        if (cardFront != null)
+        {
+            Renderer renderer = cardFront.GetComponent<Renderer>();
+            if (renderer != null)
+            {
+                return renderer.material;
+            }
+        }
+        Debug.LogError("CardFront or Renderer not found.");
+        return null;
     }
 }

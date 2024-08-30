@@ -239,6 +239,4 @@ MonoBehaviour:
   liftAmount: 3
   liftSpeed: 0.1
   flipSpeed: 1
-  nudgeAmount: 3
-  gridColumns: 3
-  gridRows: 2
+  nudgeAmount: 2
