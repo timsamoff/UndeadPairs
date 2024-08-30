@@ -479,13 +479,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 903098610}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: -0.7071068, w: 0}
   m_LocalPosition: {x: 0, y: 25, z: -7.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 180, z: 0}
 --- !u!114 &903098614
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -625,6 +625,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1390689481}
   - component: {fileID: 1390689480}
+  - component: {fileID: 1390689482}
   m_Layer: 0
   m_Name: Cards
   m_TagString: Untagged
@@ -644,12 +645,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed56f2706aca0894ebd54a54f864bb1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gridColumns: 3
+  gridRows: 2
+  cardStartHeight: 10
   delayRange: {x: 0, y: 1.5}
   bounceAmountRange: {x: 0.5, y: 1}
   fallSpeed: 0.75
   bounceSpeed: 0.05
   rotationRange: {x: 1, y: 10}
-  startYOffset: 10
   enableXRotation: 1
   enableZRotation: 1
 --- !u!4 &1390689481
@@ -673,6 +676,23 @@ Transform:
   - {fileID: 331038012}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1390689482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1390689479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 219e3b687c86c1e42ab8a06895de47bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  materialLibrary:
+  - {fileID: 2100000, guid: c2704092d8a7bf54082e66ee384e8bfd, type: 2}
+  - {fileID: 2100000, guid: 2a7bffd911d58cc468551a5ca0955e82, type: 2}
+  - {fileID: 2100000, guid: e54b22e54fbc5eb4081d34bcb8ba3860, type: 2}
+  - {fileID: 2100000, guid: 63a357cd91a3ea54c84d620fb3152c82, type: 2}
 --- !u!1001 &1501487935
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -28,7 +28,6 @@ public class CardFlip : MonoBehaviour
 
     private void Start()
     {
-        // CardPlacement contains grid settings
         cardPlacement = GetComponentInParent<CardPlacement>();
 
         if (cardPlacement == null)
@@ -61,7 +60,7 @@ public class CardFlip : MonoBehaviour
 
         if (!isAnimating)
         {
-            FlipCard(!isFlipped); // Flip! (or unflip)
+            FlipCard(!isFlipped);
         }
     }
 
@@ -73,15 +72,12 @@ public class CardFlip : MonoBehaviour
             {
                 if (flippedCards.Count == 0)
                 {
-                    // First card clicked
-                    GetComponent<Collider>().enabled = false; // Disable the collider for the first card clicked
+                    GetComponent<Collider>().enabled = false;
                 }
                 else if (flippedCards.Count == 1)
                 {
-                    // Second card clicked
-                    flippedCards[0].GetComponent<Collider>().enabled = true; // Reenable the collider for the first card
+                    flippedCards[0].GetComponent<Collider>().enabled = true;
 
-                    // Disable colliders for all other cards except the first two cards
                     foreach (var card in FindObjectsOfType<CardFlip>())
                     {
                         if (!flippedCards.Contains(card))
@@ -90,7 +86,6 @@ public class CardFlip : MonoBehaviour
                         }
                     }
 
-                    // The second card should remain clickable
                     GetComponent<Collider>().enabled = true;
                 }
 
@@ -107,7 +102,6 @@ public class CardFlip : MonoBehaviour
             {
                 flippedCards.Remove(this);
 
-                // Reenable all colliders if the first two cards have been flipped back
                 if (flippedCards.Count == 0)
                 {
                     foreach (var card in FindObjectsOfType<CardFlip>())
@@ -136,8 +130,10 @@ public class CardFlip : MonoBehaviour
         float normalizedX = (gridPosition.x - centerX) / centerX;
         float normalizedY = (gridPosition.y - centerY) / centerY;
 
-        nudgeDirection.x = -normalizedX * nudgeAmount;
-        nudgeDirection.y = -normalizedY * nudgeAmount;
+        // Reversed nudge directions due to camera rotation
+        nudgeDirection.x = normalizedX * nudgeAmount;
+        nudgeDirection.y = normalizedY * nudgeAmount;
+
         Vector3 nudgePosition = new Vector3(
             transform.position.x + nudgeDirection.x,
             transform.position.y + liftAmount,
