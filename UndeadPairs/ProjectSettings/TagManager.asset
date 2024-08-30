@@ -11,8 +11,8 @@ TagManager:
   - 
   - Water
   - UI
-  - Table
-  - Card
+  - 
+  - 
   - 
   - 
   - 
@@ -40,4 +40,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Table
+    uniqueID: 3976229071
+    locked: 0
+  - name: Card
+    uniqueID: 4250613873
     locked: 0
