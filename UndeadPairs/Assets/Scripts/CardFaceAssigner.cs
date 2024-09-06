@@ -24,14 +24,18 @@ public class CardFaceAssigner : MonoBehaviour
             return;
         }
 
+        // Create a list from the material library and shuffle it
+        List<Material> shuffledMaterials = new List<Material>(materialLibrary);
+        Shuffle(shuffledMaterials);
+
         // List of pairs of materials
         List<Material> materialPairs = new List<Material>();
 
-        // Pairs of materials
+        // Pairs of materials, ensuring that each game can use different materials
         for (int i = 0; i < requiredPairs; i++)
         {
-            materialPairs.Add(materialLibrary[i]);
-            materialPairs.Add(materialLibrary[i]);
+            materialPairs.Add(shuffledMaterials[i]);
+            materialPairs.Add(shuffledMaterials[i]);
         }
 
         // Shuffle the material pairs
