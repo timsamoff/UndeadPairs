@@ -239,4 +239,5 @@ MonoBehaviour:
   liftAmount: 3
   liftSpeed: 0.1
   flipSpeed: 1
+  endFunctionalityDelay: 1
   nudgeAmount: 2
