@@ -1,4 +1,4 @@
-using UnityEngine;
+/*using UnityEngine;
 using System.Collections;
 
 public class CardPlacement : MonoBehaviour
@@ -10,10 +10,8 @@ public class CardPlacement : MonoBehaviour
     public int GridColumns => gridColumns;
     public int GridRows => gridRows;
 
-    [Header("Card Settings")]
-    [SerializeField] private float cardEndHeight = 0.6f;
-
-    public float CardEndHeight => cardEndHeight;
+    [Header("Card Start Height")]
+    [SerializeField] private float cardStartHeight = 10f;
 
     [Header("Animation Settings")]
     [SerializeField] private Vector2 delayRange = new Vector2(0f, 2f); // Range for random delay before falling
@@ -33,6 +31,12 @@ public class CardPlacement : MonoBehaviour
 
     private void Start()
     {
+        // Disable cards at start
+        foreach (Transform child in transform)
+        {
+            //child.gameObject.SetActive(false);
+        }
+
         // Card drop
         foreach (Transform child in transform)
         {
@@ -46,20 +50,20 @@ public class CardPlacement : MonoBehaviour
         Vector3 originalPosition = prefabParent.position;
         Quaternion originalRotation = prefabParent.rotation;
 
-        // Calculate the start height based on the card's original position
-        float cardStartHeight = originalPosition.y;
-
         // Where the cards will start falling from
-        Vector3 startPosition = new Vector3(originalPosition.x, cardStartHeight, originalPosition.z); // 10f is an example offset
+        Vector3 startPosition = new Vector3(originalPosition.x, Camera.main.transform.position.y + cardStartHeight, originalPosition.z);
         prefabParent.position = startPosition;
 
         // Random delay before the cards start falling
         float delay = Random.Range(delayRange.x, delayRange.y);
         yield return new WaitForSeconds(delay);
 
+        // Enable the cards
+        prefabParent.gameObject.SetActive(true);
+
         // Drop duration (based on fallSpeed)
         float elapsedTime = 0;
-        Vector3 targetPosition = new Vector3(originalPosition.x, cardEndHeight, originalPosition.z);
+        Vector3 targetPosition = originalPosition;
 
         // Drop the cards to their original starting positions
         while (elapsedTime < fallSpeed)
@@ -73,7 +77,7 @@ public class CardPlacement : MonoBehaviour
 
         // Bounce the card
         float bounceAmount = Random.Range(bounceAmountRange.x, bounceAmountRange.y);
-        Vector3 bounceUp = new Vector3(originalPosition.x, cardEndHeight + bounceAmount, originalPosition.z);
+        Vector3 bounceUp = new Vector3(originalPosition.x, originalPosition.y + bounceAmount, originalPosition.z);
 
         // Randomize the rotation amounts for X and Z axes
         float randomRotationX = Random.Range(rotationRange.x, rotationRange.y);
@@ -91,7 +95,7 @@ public class CardPlacement : MonoBehaviour
         elapsedTime = 0;
         while (elapsedTime < bounceSpeed)
         {
-            prefabParent.position = Vector3.Lerp(targetPosition, bounceUp, elapsedTime / bounceSpeed);
+            prefabParent.position = Vector3.Lerp(originalPosition, bounceUp, elapsedTime / bounceSpeed);
             float lerpValue = elapsedTime / bounceSpeed;
             Quaternion targetRotation = Quaternion.Euler(
                 originalRotation.eulerAngles.x + (enableXRotation ? Mathf.Lerp(0, actualRotationXAmount, lerpValue) : 0f),
@@ -106,7 +110,7 @@ public class CardPlacement : MonoBehaviour
         elapsedTime = 0;
         while (elapsedTime < bounceSpeed)
         {
-            prefabParent.position = Vector3.Lerp(bounceUp, targetPosition, elapsedTime / bounceSpeed);
+            prefabParent.position = Vector3.Lerp(bounceUp, originalPosition, elapsedTime / bounceSpeed);
             float lerpValue = elapsedTime / bounceSpeed;
             Quaternion targetRotation = Quaternion.Euler(
                 originalRotation.eulerAngles.x + (enableXRotation ? Mathf.Lerp(actualRotationXAmount, 0, lerpValue) : 0f),
@@ -118,7 +122,7 @@ public class CardPlacement : MonoBehaviour
         }
 
         // Ensure the cards return to their original positions after bouncing
-        prefabParent.position = targetPosition;
+        prefabParent.position = originalPosition;
         prefabParent.rotation = originalRotation;
     }
-}
+}*/

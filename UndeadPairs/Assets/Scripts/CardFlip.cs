@@ -40,14 +40,13 @@ public class CardFlip : MonoBehaviour
         }
 
         originalRotation = transform.rotation;
-        originalPosition = transform.position;
         screenCenter = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, Camera.main.nearClipPlane));
         CalculateGridPosition();
     }
 
     private void CalculateGridPosition()
     {
-        Vector3 screenPos = Camera.main.WorldToScreenPoint(originalPosition);
+        Vector3 screenPos = Camera.main.WorldToScreenPoint(transform.position);
         float gridCellWidth = Screen.width / cardPlacement.GridColumns;
         float gridCellHeight = Screen.height / cardPlacement.GridRows;
 
@@ -61,6 +60,8 @@ public class CardFlip : MonoBehaviour
     {
         if (!isAnimating && flippedCards.Count < maxFlippedCards)
         {
+            // Update the original position to the current position
+            originalPosition = transform.position;
             FlipCard(!isFlipped);
         }
     }
@@ -121,34 +122,43 @@ public class CardFlip : MonoBehaviour
         isAllAnimationsComplete = false;  // Mark animations as incomplete
         isAnimating = true;
 
+        // Calculate target rotation for flip animation
         float currentZRotation = transform.rotation.eulerAngles.z;
         float targetZRotation = toFlipped ? (currentZRotation + 180f) % 360f : (currentZRotation - 180f + 360f) % 360f;
         Quaternion targetRotation = Quaternion.Euler(0, 0, targetZRotation);
 
-        Vector3 nudgeDirection = Vector3.zero;
-        float centerX = (cardPlacement.GridColumns - 1) / 2.0f;
-        float centerY = (cardPlacement.GridRows - 1) / 2.0f;
-        float normalizedX = (gridPosition.x - centerX) / centerX;
-        float normalizedY = (gridPosition.y - centerY) / centerY;
+        // Calculate the center of the screen in world space
+        Vector3 screenCenter = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, Camera.main.nearClipPlane));
+        screenCenter.y = transform.position.y; // Keep the Y consistent with the card's Y position
 
-        nudgeDirection.x = normalizedX * nudgeAmount;
-        nudgeDirection.y = normalizedY * nudgeAmount;
+        // Calculate the direction to the center (X-Z plane)
+        Vector3 directionToCenter = screenCenter - transform.position;
+        directionToCenter.y = 0;  // Ignore Y-axis for direction
 
-        Vector3 nudgePosition = new Vector3(
-            transform.position.x + nudgeDirection.x,
-            transform.position.y + liftAmount,
-            transform.position.z + nudgeDirection.y
-        );
+        // Calculate the normalized direction
+        Vector3 normalizedDirection = directionToCenter.normalized;
 
+        // Define Z-axis nudge (same for all cards)
+        Vector3 zNudge = new Vector3(0, 0, Mathf.Sign(normalizedDirection.z) * nudgeAmount);
+
+        // Adjust X movement based on distance
+        Vector3 xNudge = new Vector3(normalizedDirection.x * nudgeAmount, 0, 0);
+
+        // Combine the nudges (X and Z axes)
+        Vector3 nudgePosition = transform.position + zNudge + xNudge;
+        nudgePosition.y = transform.position.y + liftAmount;  // Apply vertical lift
+
+        // Lift and nudge animation
         float elapsedTime = 0;
         while (elapsedTime < liftSpeed)
         {
-            transform.position = Vector3.Lerp(originalPosition, nudgePosition, elapsedTime / liftSpeed);
+            transform.position = Vector3.Lerp(transform.position, nudgePosition, elapsedTime / liftSpeed);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
         transform.position = nudgePosition;
 
+        // Flip animation
         elapsedTime = 0;
         while (elapsedTime < flipSpeed)
         {
@@ -158,6 +168,7 @@ public class CardFlip : MonoBehaviour
         }
         transform.rotation = targetRotation;
 
+        // Return to original position
         Vector3 fallPosition = originalPosition;
         elapsedTime = 0;
         while (elapsedTime < liftSpeed)
@@ -168,6 +179,7 @@ public class CardFlip : MonoBehaviour
         }
         transform.position = fallPosition;
 
+        // Bounce animation
         float bounceElapsed = 0;
         float bounceHeight = Random.Range(bounceAmountRange.x, bounceAmountRange.y);
         Vector3 bounceStartPosition = transform.position;

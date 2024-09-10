@@ -1,4 +1,4 @@
-/* using UnityEngine;
+/*using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -10,8 +10,9 @@ public class CardFlip : MonoBehaviour
     [SerializeField] private float liftAmount = 0.5f;
     [SerializeField] private float liftSpeed = 0.1f;
     [SerializeField] private float flipSpeed = 0.1f;
+    [SerializeField] private float endFunctionalityDelay = 0.5f;
 
-    private static bool isAnyCardAnimating = false;
+    private static bool isAllAnimationsComplete = true;
 
     [Header("Move Cards Towards Center When Clicked")]
     [SerializeField] private float nudgeAmount = 0.01f;
@@ -58,7 +59,7 @@ public class CardFlip : MonoBehaviour
 
     private void OnMouseUpAsButton()
     {
-        if (!isAnimating && flippedCards.Count < maxFlippedCards && !isAnyCardAnimating)
+        if (!isAnimating && flippedCards.Count < maxFlippedCards)
         {
             FlipCard(!isFlipped);
         }
@@ -117,8 +118,7 @@ public class CardFlip : MonoBehaviour
 
     private IEnumerator FlipAnimation(bool toFlipped)
     {
-        isAnyCardAnimating = true;  // Disable all mouse interactions
-
+        isAllAnimationsComplete = false;  // Mark animations as incomplete
         isAnimating = true;
 
         float currentZRotation = transform.rotation.eulerAngles.z;
@@ -192,64 +192,68 @@ public class CardFlip : MonoBehaviour
 
         isFlipped = toFlipped;
         isAnimating = false;
-        isAnyCardAnimating = false;  // Re-enable mouse interactions
+
+        yield return new WaitForSeconds(endFunctionalityDelay);
+
+        // Check if all animations are complete
+        if (AreAllAnimationsComplete())
+        {
+            isAllAnimationsComplete = true;
+        }
 
         if (toFlipped)
         {
-            if (flippedCards.Count == maxFlippedCards)
+            if (flippedCards.Count == maxFlippedCards && isAllAnimationsComplete)
             {
                 StartCoroutine(CheckForMatch());
             }
         }
     }
 
+    private bool AreAllAnimationsComplete()
+    {
+        foreach (var card in FindObjectsOfType<CardFlip>())
+        {
+            if (card.isAnimating)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
     private IEnumerator CheckForMatch()
     {
-        yield return new WaitForSeconds(0.5f); // Wait for animations to complete
-
-        if (flippedCards.Count != maxFlippedCards)
+        // Wait until all animations are complete
+        while (!isAllAnimationsComplete)
         {
-            Debug.LogWarning("Unexpected number of flipped cards: " + flippedCards.Count);
-            yield break;
+            yield return null;
         }
 
+        // Check match logic...
         CardFlip card1 = flippedCards[0];
         CardFlip card2 = flippedCards[1];
 
         Material material1 = card1.GetCardMaterial();
         Material material2 = card2.GetCardMaterial();
 
-        // Check if materials are found
-        if (material1 == null || material2 == null)
-        {
-            Debug.LogError("One or both materials are missing.");
-            yield break;
-        }
-
-        // Compare material names instead of material instances
         bool isMatch = material1.name == material2.name;
-        Debug.Log($"Card 1 Material Name: {material1.name}, Card 2 Material Name: {material2.name}");
 
         if (isMatch)
         {
             Debug.Log("Cards match!");
             Destroy(card1.gameObject);
             Destroy(card2.gameObject);
-
-            // Ensure all remaining cards are clickable again
-            EnableAllCardColliders();
         }
         else
         {
             Debug.Log("Cards do not match.");
             card1.FlipCard(false);
             card2.FlipCard(false);
-
-            // Ensure all remaining cards are clickable again
-            EnableAllCardColliders();
         }
 
         flippedCards.Clear();
+        EnableAllCardColliders();
     }
 
     private void EnableAllCardColliders()
@@ -274,4 +278,4 @@ public class CardFlip : MonoBehaviour
         Debug.LogError("CardFront or Renderer not found.");
         return null;
     }
-} */
+}*/
