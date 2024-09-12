@@ -29,8 +29,12 @@ public class CardFlip : MonoBehaviour
 
     private CardPlacement cardPlacement;
 
+    private MakeSplat makeSplat;
+
     private void Start()
     {
+        makeSplat = FindObjectOfType<MakeSplat>();
+
         cardPlacement = GetComponentInParent<CardPlacement>();
 
         if (cardPlacement == null)
@@ -221,7 +225,6 @@ public class CardFlip : MonoBehaviour
             }
         }
     }
-
     private bool AreAllAnimationsComplete()
     {
         foreach (var card in FindObjectsOfType<CardFlip>())
@@ -254,6 +257,13 @@ public class CardFlip : MonoBehaviour
         if (isMatch)
         {
             Debug.Log("Cards match!");
+
+            if (makeSplat != null)
+            {
+                makeSplat.SpawnSplat(card1.transform.position);
+                makeSplat.SpawnSplat(card2.transform.position);
+            }
+
             Destroy(card1.gameObject);
             Destroy(card2.gameObject);
         }
