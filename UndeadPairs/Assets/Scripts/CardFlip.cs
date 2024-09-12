@@ -17,6 +17,10 @@ public class CardFlip : MonoBehaviour
     [Header("Move Cards Towards Center When Clicked")]
     [SerializeField] private float nudgeAmount = 0.01f;
 
+    [Header("Sound Settings")]
+    [SerializeField] private AudioClip[] zombieGroan;
+    private AudioSource audioSource;
+
     private bool isFlipped = false;
     private Quaternion originalRotation;
     private Vector3 originalPosition;
@@ -46,6 +50,12 @@ public class CardFlip : MonoBehaviour
         originalRotation = transform.rotation;
         screenCenter = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, Camera.main.nearClipPlane));
         CalculateGridPosition();
+
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            Debug.LogError("AudioSource component not found.");
+        }
     }
 
     private void CalculateGridPosition()
@@ -269,7 +279,16 @@ public class CardFlip : MonoBehaviour
         }
         else
         {
-            Debug.Log("Cards do not match.");
+            Debug.Log("Cards don't match.");
+
+            if (zombieGroan.Length > 0)
+            {
+                Debug.Log("Playing random zombie groan.");
+
+                AudioClip randomzombieGroan = zombieGroan[Random.Range(0, zombieGroan.Length)];
+                audioSource.PlayOneShot(randomzombieGroan);
+            }
+
             card1.FlipCard(false);
             card2.FlipCard(false);
         }
