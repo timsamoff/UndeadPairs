@@ -14,11 +14,10 @@ public class CardFlip : MonoBehaviour
 
     private static bool isAllAnimationsComplete = true;
 
-    [Header("Move Cards Towards Center When Clicked")]
-    [SerializeField] private float nudgeAmount = 0.01f;
-
     [Header("Sound Settings")]
     [SerializeField] private AudioClip[] zombieGroan;
+    [SerializeField] private AudioClip[] cardFlip;
+    [SerializeField] private AudioClip[] gunBlast;
     private AudioSource audioSource;
 
     private bool isFlipped = false;
@@ -136,6 +135,12 @@ public class CardFlip : MonoBehaviour
         isAllAnimationsComplete = false;  // Mark animations as incomplete
         isAnimating = true;
 
+        if (cardFlip.Length > 0)
+        {
+            AudioClip randomCardFlip = cardFlip[Random.Range(0, cardFlip.Length)];
+            audioSource.PlayOneShot(randomCardFlip);
+        }
+
         // Calculate target rotation for flip animation
         float currentZRotation = transform.rotation.eulerAngles.z;
         float targetZRotation = toFlipped ? (currentZRotation + 180f) % 360f : (currentZRotation - 180f + 360f) % 360f;
@@ -153,10 +158,10 @@ public class CardFlip : MonoBehaviour
         Vector3 normalizedDirection = directionToCenter.normalized;
 
         // Define Z-axis nudge (same for all cards)
-        Vector3 zNudge = new Vector3(0, 0, Mathf.Sign(normalizedDirection.z) * nudgeAmount);
+        Vector3 zNudge = new Vector3(0, 0, Mathf.Sign(normalizedDirection.z) * cardPlacement.NudgeAmount);
 
         // Adjust X movement based on distance
-        Vector3 xNudge = new Vector3(normalizedDirection.x * nudgeAmount, 0, 0);
+        Vector3 xNudge = new Vector3(normalizedDirection.x * cardPlacement.NudgeAmount, 0, 0);
 
         // Combine the nudges (X and Z axes)
         Vector3 nudgePosition = transform.position + zNudge + xNudge;
@@ -268,6 +273,14 @@ public class CardFlip : MonoBehaviour
         {
             Debug.Log("Cards match!");
 
+            if (gunBlast.Length > 0)
+            {
+                Debug.Log("Playing gun blast sound.");
+
+                AudioClip randomGunBlast = gunBlast[Random.Range(0, gunBlast.Length)];
+                AudioSource.PlayClipAtPoint(randomGunBlast, Camera.main.transform.position);
+            }
+
             if (makeSplat != null)
             {
                 makeSplat.SpawnSplat(card1.transform.position);
@@ -276,6 +289,9 @@ public class CardFlip : MonoBehaviour
 
             Destroy(card1.gameObject);
             Destroy(card2.gameObject);
+
+            //card1.gameObject.SetActive(false);
+            //card2.gameObject.SetActive(false);
         }
         else
         {
@@ -283,10 +299,8 @@ public class CardFlip : MonoBehaviour
 
             if (zombieGroan.Length > 0)
             {
-                Debug.Log("Playing random zombie groan.");
-
-                AudioClip randomzombieGroan = zombieGroan[Random.Range(0, zombieGroan.Length)];
-                audioSource.PlayOneShot(randomzombieGroan);
+                AudioClip randomZombieGroan = zombieGroan[Random.Range(0, zombieGroan.Length)];
+                audioSource.PlayOneShot(randomZombieGroan);
             }
 
             card1.FlipCard(false);

@@ -271,6 +271,30 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f4cf5bce89effcf4f8ef51c3da341b40, type: 3}
   - {fileID: 8300000, guid: 5770d893e48ff6a4ebdf7517bcfd339c, type: 3}
   - {fileID: 8300000, guid: 5d84472b776c64d4d8867dc11a4e5173, type: 3}
+  cardFlip:
+  - {fileID: 8300000, guid: 75300f73e1e12d041897f78eba2e27d2, type: 3}
+  - {fileID: 8300000, guid: 413bfbc6e580bf2419522f289da13ed0, type: 3}
+  - {fileID: 8300000, guid: e532f9dd4a967b14ab31bbdfccfc84a7, type: 3}
+  - {fileID: 8300000, guid: cf6798220fbcda247991415d84ac79e7, type: 3}
+  - {fileID: 8300000, guid: 2374129277b02ae4ab2dc8200cd33f09, type: 3}
+  - {fileID: 8300000, guid: 885ccfff751e0ab448a5ff669f761bb5, type: 3}
+  - {fileID: 8300000, guid: e067a3376c7dae549af9c2b0d1ebb5b6, type: 3}
+  - {fileID: 8300000, guid: cc219516f1f903b448a7a410622d612d, type: 3}
+  - {fileID: 8300000, guid: fe8cea86b67ef3d48aae049eb0fa1e17, type: 3}
+  - {fileID: 8300000, guid: 75352689e5fc5894bb0dbace0c932d2b, type: 3}
+  - {fileID: 8300000, guid: daf8378cb8fdc6342ae59da1a79efe67, type: 3}
+  - {fileID: 8300000, guid: 14d4363dcc945d04ca1b58a65756edf4, type: 3}
+  - {fileID: 8300000, guid: c34842a58ef1cd747b3b005bf8e67b40, type: 3}
+  - {fileID: 8300000, guid: 914d58bf63404424b957105bf294e0f1, type: 3}
+  - {fileID: 8300000, guid: 7553393f0aad2cc4b8c825200e31a253, type: 3}
+  - {fileID: 8300000, guid: 343e2b8824d822746a11aea254fa2e6f, type: 3}
+  gunBlast:
+  - {fileID: 8300000, guid: 20f8344698fbff748a65820aafee2ff5, type: 3}
+  - {fileID: 8300000, guid: 9d3b22e84bd08c64986ea6e34eb18a42, type: 3}
+  - {fileID: 8300000, guid: 4e87dbcc377c73c45930fd6b69d4e8e1, type: 3}
+  - {fileID: 8300000, guid: 00cd00821ea2b2c488fb3dc72bf64454, type: 3}
+  - {fileID: 8300000, guid: b8b19034f666ed4428a45bade2c87fd8, type: 3}
+  - {fileID: 8300000, guid: f21eafd578b6fd24cbeedf6da439be77, type: 3}
 --- !u!82 &151565447084151595
 AudioSource:
   m_ObjectHideFlags: 0

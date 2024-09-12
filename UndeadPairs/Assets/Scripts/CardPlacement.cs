@@ -6,9 +6,11 @@ public class CardPlacement : MonoBehaviour
     [Header("Grid Settings")]
     [SerializeField] private int gridColumns = 3;
     [SerializeField] private int gridRows = 2;
+    [SerializeField] private float nudgeAmount = 2f;
 
     public int GridColumns => gridColumns;
     public int GridRows => gridRows;
+    public float NudgeAmount => nudgeAmount;
 
     [Header("Card Settings")]
     [SerializeField] private float cardEndHeight = 0.6f;
@@ -26,10 +28,14 @@ public class CardPlacement : MonoBehaviour
     // Rotation amount range for both X and Z axes (in degrees)
     [SerializeField] private Vector2 rotationRange = new Vector2(0f, 1f);
 
-    [Header("For Testing")]
+    [Header("For Bounce Testing")]
     // Checkboxes to enable/disable X and Z axis rotation
     [SerializeField] private bool enableXRotation = true;
     [SerializeField] private bool enableZRotation = true;
+
+    [Header("Sound Settings")]
+    [SerializeField] private AudioClip[] cardThrow;
+    private AudioSource audioSource;
 
     private void Start()
     {
@@ -37,6 +43,12 @@ public class CardPlacement : MonoBehaviour
         foreach (Transform child in transform)
         {
             StartCoroutine(FallAndBounce(child));
+        }
+
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            Debug.LogError("AudioSource component not found.");
         }
     }
 
@@ -61,7 +73,13 @@ public class CardPlacement : MonoBehaviour
         float elapsedTime = 0;
         Vector3 targetPosition = new Vector3(originalPosition.x, cardEndHeight, originalPosition.z);
 
-        // Drop the cards to their original starting positions
+        if (cardThrow.Length > 0)
+        {
+            AudioClip randomCardThrow = cardThrow[Random.Range(0, cardThrow.Length)];
+            audioSource.PlayOneShot(randomCardThrow);
+        }
+
+        // Drop the cards
         while (elapsedTime < fallSpeed)
         {
             prefabParent.position = Vector3.Lerp(startPosition, targetPosition, elapsedTime / fallSpeed);
