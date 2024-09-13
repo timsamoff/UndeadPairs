@@ -34,6 +34,8 @@ public class CardFlip : MonoBehaviour
 
     private MakeSplat makeSplat;
 
+    private LoseHealth loseHealth;
+
     private void Start()
     {
         makeSplat = FindObjectOfType<MakeSplat>();
@@ -54,6 +56,13 @@ public class CardFlip : MonoBehaviour
         if (audioSource == null)
         {
             Debug.LogError("AudioSource component not found.");
+        }
+
+        loseHealth = FindObjectOfType<LoseHealth>();
+
+        if (loseHealth == null)
+        {
+            Debug.LogError("LoseHealth component not found.");
         }
     }
 
@@ -301,6 +310,11 @@ public class CardFlip : MonoBehaviour
             {
                 AudioClip randomZombieGroan = zombieGroan[Random.Range(0, zombieGroan.Length)];
                 audioSource.PlayOneShot(randomZombieGroan);
+            }
+
+            if (loseHealth != null)
+            {
+                loseHealth.ReduceHealth();
             }
 
             card1.FlipCard(false);
