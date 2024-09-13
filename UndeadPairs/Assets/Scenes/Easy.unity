@@ -910,7 +910,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 591164678}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2011039850}
+        m_TargetAssemblyTypeName: BackToMenu, Assembly-CSharp
+        m_MethodName: Back
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &591164678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1311,7 +1323,7 @@ GameObject:
   - component: {fileID: 1207753474}
   - component: {fileID: 1207753473}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: GameSession
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2317,6 +2329,7 @@ GameObject:
   - component: {fileID: 2011039846}
   - component: {fileID: 2011039845}
   - component: {fileID: 2011039849}
+  - component: {fileID: 2011039850}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -2422,6 +2435,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar: {fileID: 1687003186}
   healthDecreasePercent: 25
+--- !u!114 &2011039850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011039844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68a8d16ff5a705b49a8e342f19bb3feb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2026317795
 PrefabInstance:
   m_ObjectHideFlags: 0
