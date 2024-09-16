@@ -4,20 +4,39 @@ using UnityEngine;
 
 public class SetCursor : MonoBehaviour
 {
-
+    [Header("Settings")]
+    [SerializeField] private Texture2D defaultCursorTexture;
     [SerializeField] private Texture2D cursorTexture;
     private Vector2 cursorHotspot;
+    private Vector2 defaultCursorHotspot;
 
-    // Start is called before the first frame update
+    // Layer for clickable objects
+    [SerializeField] private LayerMask clickableLayer;
+
     void Start()
     {
         cursorHotspot = new Vector2(cursorTexture.width / 2, cursorTexture.height / 2);
-        Cursor.SetCursor(cursorTexture, cursorHotspot, CursorMode.ForceSoftware);
+        defaultCursorHotspot = new Vector2(defaultCursorTexture.width / 2, defaultCursorTexture.height / 2);
+        Cursor.SetCursor(defaultCursorTexture, defaultCursorHotspot, CursorMode.ForceSoftware); // Set default cursor initially
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        CheckForClickableObject();
+    }
+
+    void CheckForClickableObject()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, clickableLayer))
+        {
+            Cursor.SetCursor(cursorTexture, cursorHotspot, CursorMode.ForceSoftware);
+        }
+        else
+        {
+            Cursor.SetCursor(defaultCursorTexture, defaultCursorHotspot, CursorMode.ForceSoftware);
+        }
     }
 }

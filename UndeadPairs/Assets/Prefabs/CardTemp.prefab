@@ -178,7 +178,7 @@ GameObject:
   - component: {fileID: 1821104495754693231}
   - component: {fileID: -300913894876693972}
   - component: {fileID: 151565447084151595}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CardTemp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -241,7 +241,6 @@ MonoBehaviour:
   liftSpeed: 0.1
   flipSpeed: 1
   endFunctionalityDelay: 1
-  nudgeAmount: 5
   zombieGroan:
   - {fileID: 8300000, guid: 75bc2ed41f2452346a3cc1574b2ed2ce, type: 3}
   - {fileID: 8300000, guid: 449c1f6813fdcac4b82e3eb2cb589c16, type: 3}
