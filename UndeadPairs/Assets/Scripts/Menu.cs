@@ -5,6 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour
 {
+    public void PracticeStart()
+    {
+        SceneManager.LoadScene("Practice");
+    }
+
     public void EasyStart()
     {
         SceneManager.LoadScene("Easy");
