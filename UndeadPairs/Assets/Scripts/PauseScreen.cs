@@ -1,26 +1,20 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class PauseScreen : MonoBehaviour
 {
     [Header("Settings")]
-    [SerializeField] private CanvasGroup pauseCanvasGroup;
     [SerializeField] private CanvasGroup uiCanvasGroup;
     [SerializeField] private GameObject parentObject;  // Reference to parent with children having "Card Flip" component
     [SerializeField] private float fadeTime = 1.0f;
+    [SerializeField] private string pauseSceneName = "Pause";  // Name of the Pause scene
 
+    private CanvasGroup pauseCanvasGroup;
     private bool isPaused = false;
 
     private void Start()
     {
-        if (pauseCanvasGroup != null)
-        {
-            pauseCanvasGroup.alpha = 0;
-            pauseCanvasGroup.interactable = false;
-            pauseCanvasGroup.blocksRaycasts = false;
-            pauseCanvasGroup.gameObject.SetActive(false);
-        }
-
         if (uiCanvasGroup != null)
         {
             uiCanvasGroup.alpha = 1;
@@ -29,40 +23,99 @@ public class PauseScreen : MonoBehaviour
         }
     }
 
+    public float FadeTime
+    {
+        get { return fadeTime; }
+    }
+
     public void OnPauseButtonPressed()
     {
         if (!isPaused)
         {
-            PauseGame();
-            DisableCardClicks();
-            StartCoroutine(FadeInCanvasGroup(pauseCanvasGroup));
-            StartCoroutine(FadeOutCanvasGroup(uiCanvasGroup));
+            StartCoroutine(LoadPauseScene());
         }
     }
 
-    public void OnBackButtonPressed()
+    public void OnResumeButtonPressed()
     {
         if (isPaused)
         {
-            ResumeGame();
-            EnableCardClicks();
-            StartCoroutine(FadeOutCanvasGroup(pauseCanvasGroup));
-            StartCoroutine(FadeInCanvasGroup(uiCanvasGroup));
+            StartCoroutine(UnloadPauseScene());
         }
+    }
+
+    private IEnumerator LoadPauseScene()
+    {
+        // Load the Pause scene additively
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(pauseSceneName, LoadSceneMode.Additive);
+
+        // Wait until the scene is fully loaded
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+
+        // After the scene is loaded, find the CanvasGroup in the Pause scene
+        Scene pauseScene = SceneManager.GetSceneByName(pauseSceneName);
+        GameObject[] rootObjects = pauseScene.GetRootGameObjects();
+        foreach (GameObject obj in rootObjects)
+        {
+            CanvasGroup cg = obj.GetComponentInChildren<CanvasGroup>();
+            if (cg != null)
+            {
+                pauseCanvasGroup = cg;
+                break;
+            }
+        }
+
+        if (pauseCanvasGroup != null)
+        {
+            pauseCanvasGroup.alpha = 0;
+            pauseCanvasGroup.interactable = false;
+            pauseCanvasGroup.blocksRaycasts = false;
+            pauseCanvasGroup.gameObject.SetActive(true);
+        }
+
+        PauseGame();
+        DisableCardClicks();
+        StartCoroutine(FadeOutCanvasGroup(uiCanvasGroup));
+        StartCoroutine(FadeInCanvasGroup(pauseCanvasGroup));
+    }
+
+    private IEnumerator UnloadPauseScene()
+    {
+        if (pauseCanvasGroup != null)
+        {
+            // Fade out the pause scene UI
+            yield return StartCoroutine(FadeOutCanvasGroup(pauseCanvasGroup));
+        }
+
+        // Unload the Pause scene
+        AsyncOperation asyncUnload = SceneManager.UnloadSceneAsync(pauseSceneName);
+
+        // Wait until the scene is fully unloaded
+        while (!asyncUnload.isDone)
+        {
+            yield return null;
+        }
+
+        // After the pause scene is unloaded, fade in the main UI canvas
+        ResumeGame();
+        StartCoroutine(FadeInCanvasGroup(uiCanvasGroup));
     }
 
     private void PauseGame()
     {
         Time.timeScale = 0f;
         isPaused = true;
-        pauseCanvasGroup.gameObject.SetActive(true);
     }
 
     private void ResumeGame()
     {
         Time.timeScale = 1f;
+        Debug.Log("Resuming game... Time.timeScale set to: " + Time.timeScale);
         isPaused = false;
-        pauseCanvasGroup.gameObject.SetActive(false);
+        EnableCardClicks();  // Ensure card clicks are re-enabled
     }
 
     private IEnumerator FadeInCanvasGroup(CanvasGroup canvasGroup)
@@ -76,6 +129,7 @@ public class PauseScreen : MonoBehaviour
             elapsedTime += Time.unscaledDeltaTime;
             yield return null;
         }
+
         canvasGroup.alpha = 1;
         canvasGroup.interactable = true;
         canvasGroup.blocksRaycasts = true;
@@ -93,6 +147,7 @@ public class PauseScreen : MonoBehaviour
             elapsedTime += Time.unscaledDeltaTime;
             yield return null;
         }
+
         canvasGroup.alpha = 0;
         canvasGroup.gameObject.SetActive(false);
     }

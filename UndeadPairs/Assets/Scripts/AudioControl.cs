@@ -1,60 +1,71 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class AudioControl : MonoBehaviour
 {
+    public static AudioControl Instance { get; private set; }
+
     [Header("Audio Settings")]
-    [SerializeField] private Toggle cardSfxToggle;
-    [SerializeField] private Toggle otherSfxToggle;
-    [SerializeField] private Toggle musicToggle;
+    [SerializeField] private GameObject cardSfxParentObject; // Parent object containing card SFX
+    [SerializeField] private AudioSource[] otherSfx;         // Array for other SFX
+    [SerializeField] private AudioSource music;              // Music AudioSource
 
-    [SerializeField] private GameObject cardSfxParentObject;
-    [SerializeField] private AudioSource[] otherSfx;
-    [SerializeField] private AudioSource music;
+    private AudioSource[] cardSfx; // Array to hold card SFX AudioSources
 
-    private AudioSource[] cardSfx;
+    private bool isSfxMuted = false;
+
+    private void Awake()
+    {
+        // Singleton pattern setup
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     private void Start()
     {
+        // Get all the card SFX sources from the parent object
         if (cardSfxParentObject != null)
         {
             cardSfx = cardSfxParentObject.GetComponentsInChildren<AudioSource>();
         }
 
-        if (cardSfxToggle != null)
-        {
-            cardSfxToggle.onValueChanged.AddListener(OnCardSfxToggleValueChanged);
-            UpdateAudioState(cardSfx, cardSfxToggle.isOn);
-        }
+        // Optionally, you can load the saved states from PlayerPrefs here and apply them:
+        bool sfxEnabled = PlayerPrefs.GetInt("SFX_Toggle_State", 1) == 1;
+        UpdateAudioState(cardSfx, sfxEnabled);
+        UpdateAudioState(otherSfx, sfxEnabled);
 
-        if (otherSfxToggle != null)
-        {
-            otherSfxToggle.onValueChanged.AddListener(OnOtherSfxToggleValueChanged);
-            UpdateAudioState(otherSfx, otherSfxToggle.isOn);
-        }
-
-        if (musicToggle != null)
-        {
-            musicToggle.onValueChanged.AddListener(OnMusicToggleValueChanged);
-            UpdateMusicState(musicToggle.isOn);
-        }
+        bool musicEnabled = PlayerPrefs.GetInt("Music_Toggle_State", 1) == 1;
+        UpdateMusicState(musicEnabled);
     }
 
-    private void OnCardSfxToggleValueChanged(bool isOn)
+    // Public method to handle SFX toggle (controls both card and other SFX)
+    public void OnSfxToggleValueChanged(bool isOn)
     {
-        UpdateAudioState(cardSfx, isOn);
+        isSfxMuted = !isOn;
+        UpdateAudioState(cardSfx, isOn);  // Control card SFX
+        UpdateAudioState(otherSfx, isOn); // Control other SFX
+        PlayerPrefs.SetInt("SFX_Toggle_State", isOn ? 1 : 0); // Save toggle state
     }
 
-    private void OnOtherSfxToggleValueChanged(bool isOn)
-    {
-        UpdateAudioState(otherSfx, isOn);
-    }
-
-    private void OnMusicToggleValueChanged(bool isOn)
+    // Public method to handle Music toggle
+    public void OnMusicToggleValueChanged(bool isOn)
     {
         UpdateMusicState(isOn);
+        PlayerPrefs.SetInt("Music_Toggle_State", isOn ? 1 : 0); // Save toggle state
     }
 
+    public bool IsSfxMuted()
+    {
+        return isSfxMuted;
+    }
+
+    // Helper method to update the mute state of AudioSource arrays
     private void UpdateAudioState(AudioSource[] audioSources, bool isAudioOn)
     {
         if (audioSources != null)
@@ -69,6 +80,7 @@ public class AudioControl : MonoBehaviour
         }
     }
 
+    // Helper method to update the music mute state
     private void UpdateMusicState(bool isMusicOn)
     {
         if (music != null)

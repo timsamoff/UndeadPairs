@@ -282,7 +282,7 @@ public class CardFlip : MonoBehaviour
         {
             Debug.Log("Cards match!");
 
-            if (gunBlast.Length > 0)
+            if (gunBlast.Length > 0 && !AudioControl.Instance.IsSfxMuted())
             {
                 Debug.Log("Playing gun blast sound.");
 
