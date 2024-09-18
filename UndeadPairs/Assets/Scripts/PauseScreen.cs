@@ -6,7 +6,7 @@ public class PauseScreen : MonoBehaviour
 {
     [Header("Settings")]
     [SerializeField] private CanvasGroup uiCanvasGroup;
-    [SerializeField] private GameObject parentObject;  // Reference to parent with children having "Card Flip" component
+    [SerializeField] private GameObject parentObject;
     [SerializeField] private float fadeTime = 1.0f;
     [SerializeField] private string pauseSceneName = "Pause";  // Name of the Pause scene
 
@@ -46,16 +46,13 @@ public class PauseScreen : MonoBehaviour
 
     private IEnumerator LoadPauseScene()
     {
-        // Load the Pause scene additively
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(pauseSceneName, LoadSceneMode.Additive);
 
-        // Wait until the scene is fully loaded
         while (!asyncLoad.isDone)
         {
             yield return null;
         }
 
-        // After the scene is loaded, find the CanvasGroup in the Pause scene
         Scene pauseScene = SceneManager.GetSceneByName(pauseSceneName);
         GameObject[] rootObjects = pauseScene.GetRootGameObjects();
         foreach (GameObject obj in rootObjects)
@@ -115,7 +112,7 @@ public class PauseScreen : MonoBehaviour
         Time.timeScale = 1f;
         Debug.Log("Resuming game... Time.timeScale set to: " + Time.timeScale);
         isPaused = false;
-        EnableCardClicks();  // Ensure card clicks are re-enabled
+        EnableCardClicks();
     }
 
     private IEnumerator FadeInCanvasGroup(CanvasGroup canvasGroup)
@@ -152,7 +149,6 @@ public class PauseScreen : MonoBehaviour
         canvasGroup.gameObject.SetActive(false);
     }
 
-    // Disable clicking on all children with a "Card Flip" component
     private void DisableCardClicks()
     {
         CardFlip[] cardFlips = parentObject.GetComponentsInChildren<CardFlip>();
@@ -167,7 +163,6 @@ public class PauseScreen : MonoBehaviour
         }
     }
 
-    // Enable clicking on all children with a "Card Flip" component
     private void EnableCardClicks()
     {
         CardFlip[] cardFlips = parentObject.GetComponentsInChildren<CardFlip>();

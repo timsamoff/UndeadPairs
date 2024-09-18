@@ -29,13 +29,11 @@ public class AudioControl : MonoBehaviour
 
     private void Start()
     {
-        // Get all the card SFX sources from the parent object
         if (cardSfxParentObject != null)
         {
             cardSfx = cardSfxParentObject.GetComponentsInChildren<AudioSource>();
         }
 
-        // Optionally, you can load the saved states from PlayerPrefs here and apply them:
         bool sfxEnabled = PlayerPrefs.GetInt("SFX_Toggle_State", 1) == 1;
         UpdateAudioState(cardSfx, sfxEnabled);
         UpdateAudioState(otherSfx, sfxEnabled);
@@ -44,7 +42,6 @@ public class AudioControl : MonoBehaviour
         UpdateMusicState(musicEnabled);
     }
 
-    // Public method to handle SFX toggle (controls both card and other SFX)
     public void OnSfxToggleValueChanged(bool isOn)
     {
         isSfxMuted = !isOn;
@@ -65,7 +62,6 @@ public class AudioControl : MonoBehaviour
         return isSfxMuted;
     }
 
-    // Helper method to update the mute state of AudioSource arrays
     private void UpdateAudioState(AudioSource[] audioSources, bool isAudioOn)
     {
         if (audioSources != null)
@@ -80,7 +76,6 @@ public class AudioControl : MonoBehaviour
         }
     }
 
-    // Helper method to update the music mute state
     private void UpdateMusicState(bool isMusicOn)
     {
         if (music != null)
