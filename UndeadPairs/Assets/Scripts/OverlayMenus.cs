@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PauseScreenManager : MonoBehaviour
+public class OverlayMenus : MonoBehaviour
 {
     private PauseScreen pauseScreen;
 
