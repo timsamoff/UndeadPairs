@@ -10,11 +10,18 @@ public class PauseScreen : MonoBehaviour
     [SerializeField] private float fadeTime = 1.0f;
     [SerializeField] private string pauseSceneName = "Pause";  // Name of the Pause scene
 
+    [Header("Interactions")]
+    //[SerializeField] private AudioClip click;
+    //[SerializeField] private AudioClip hover;
+    [SerializeField] private AudioSource audioSource;
+
     private CanvasGroup pauseCanvasGroup;
     private bool isPaused = false;
 
     private void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+
         if (uiCanvasGroup != null)
         {
             uiCanvasGroup.alpha = 1;
@@ -32,6 +39,7 @@ public class PauseScreen : MonoBehaviour
     {
         if (!isPaused)
         {
+            PlayClick();
             StartCoroutine(LoadPauseScene());
         }
     }
@@ -43,6 +51,17 @@ public class PauseScreen : MonoBehaviour
             StartCoroutine(UnloadPauseScene());
         }
     }
+
+    public void PlayClick()
+    {
+        //audioSource.PlayOneShotclick);
+    }
+
+    public void PlayHover()
+    {
+        //audioSource.PlayOneShot(hover);
+    }
+
 
     private IEnumerator LoadPauseScene()
     {

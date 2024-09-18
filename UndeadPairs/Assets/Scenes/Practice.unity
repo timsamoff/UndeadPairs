@@ -839,6 +839,7 @@ GameObject:
   - component: {fileID: 591164679}
   - component: {fileID: 591164678}
   - component: {fileID: 591164677}
+  - component: {fileID: 591164680}
   m_Layer: 5
   m_Name: Pause Button
   m_TagString: Untagged
@@ -961,6 +962,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 591164675}
   m_CullTransparentMesh: 1
+--- !u!114 &591164680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 591164675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1207753475}
+          m_TargetAssemblyTypeName: PauseScreen, Assembly-CSharp
+          m_MethodName: PlayHover
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &903098610
 GameObject:
   m_ObjectHideFlags: 0
@@ -1409,6 +1439,9 @@ MonoBehaviour:
   parentObject: {fileID: 1390689479}
   fadeTime: 1.5
   pauseSceneName: Pause
+  click: {fileID: 8300000, guid: 2157f1b8cfab6ff418e00c7240af24c0, type: 3}
+  hover: {fileID: 8300000, guid: a8646f1b69c94804584a67d476328e2f, type: 3}
+  audioSource: {fileID: 1390689484}
 --- !u!114 &1207753476
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2397,8 +2430,6 @@ GameObject:
   - component: {fileID: 2011039846}
   - component: {fileID: 2011039845}
   - component: {fileID: 2011039849}
-  - component: {fileID: 2011039850}
-  - component: {fileID: 2011039851}
   - component: {fileID: 2011039852}
   m_Layer: 5
   m_Name: UI
@@ -2505,32 +2536,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar: {fileID: 1687003186}
   healthDecreasePercent: 25
---- !u!114 &2011039850
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2011039844}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68a8d16ff5a705b49a8e342f19bb3feb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2011039851
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2011039844}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b166b0e5438ed14497f8b721fc7121a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  delayBeforeFade: 2.5
-  fadeTime: 1
 --- !u!225 &2011039852
 CanvasGroup:
   m_ObjectHideFlags: 0
