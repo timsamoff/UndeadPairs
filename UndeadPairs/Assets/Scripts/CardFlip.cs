@@ -287,7 +287,9 @@ public class CardFlip : MonoBehaviour
                 Debug.Log("Playing gun blast sound.");
 
                 AudioClip randomGunBlast = gunBlast[Random.Range(0, gunBlast.Length)];
-                AudioSource.PlayClipAtPoint(randomGunBlast, Camera.main.transform.position);
+                // AudioSource.PlayClipAtPoint(randomGunBlast, Camera.main.transform.position);
+                AudioControl.Instance.PlayClipAtPosition(randomGunBlast, Camera.main.transform.position);
+
             }
 
             if (makeSplat != null)
