@@ -135,7 +135,7 @@ public class CardPlacement : MonoBehaviour
             yield return null;
         }
 
-        // Ensure the cards return to their original positions after bouncing
+        // Ensure the cards return to their destinations after bouncing
         prefabParent.position = targetPosition;
         prefabParent.rotation = originalRotation;
     }

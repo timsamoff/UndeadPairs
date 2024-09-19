@@ -1,56 +1,48 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    [Header("Interactions")]
-    [SerializeField] private AudioClip click;
-    [SerializeField] private AudioClip hover;
-    private AudioSource audioSource;
+    public FadeToBlack fadeToBlack;
 
-    private void Start()
+    void Start()
     {
-        audioSource = GetComponent<AudioSource>();
+        fadeToBlack.onFadeComplete += LoadScene;
     }
+
+    private string sceneToLoad;
 
     public void PracticeStart()
     {
-        PlayClick();
-        SceneManager.LoadScene("Practice");
+        sceneToLoad = "Practice";
+        fadeToBlack.StartFade();
     }
 
     public void EasyStart()
     {
-        PlayClick();
-        SceneManager.LoadScene("Easy");
+        fadeToBlack.StartFade();
     }
 
     public void NormalStart()
     {
-        PlayClick();
-        SceneManager.LoadScene("Normal");
+        sceneToLoad = "Normal";
+        fadeToBlack.StartFade();
     }
 
     public void DifficultStart()
     {
-        PlayClick();
-        SceneManager.LoadScene("Hard");
+        sceneToLoad = "Difficult";
+        fadeToBlack.StartFade();
     }
 
-    /* public void Quit()
+    private void LoadScene()
     {
-        Application.Quit();
-    } */
-
-    private void PlayClick()
-    {
-        audioSource.PlayOneShot(click);
+        SceneManager.LoadScene(sceneToLoad);
     }
 
-    public void PlayHover()
+    private void OnDestroy()
     {
-        audioSource.PlayOneShot(hover);
+        fadeToBlack.onFadeComplete -= LoadScene;
     }
 }
