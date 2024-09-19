@@ -29,11 +29,13 @@ public class AudioControl : MonoBehaviour
 
     private void Start()
     {
+        // Get all the card SFX sources from the parent object
         if (cardSfxParentObject != null)
         {
             cardSfx = cardSfxParentObject.GetComponentsInChildren<AudioSource>();
         }
 
+        // Load the saved states from PlayerPrefs here and apply them:
         bool sfxEnabled = PlayerPrefs.GetInt("SFX_Toggle_State", 1) == 1;
         UpdateAudioState(cardSfx, sfxEnabled);
         UpdateAudioState(otherSfx, sfxEnabled);
@@ -42,9 +44,10 @@ public class AudioControl : MonoBehaviour
         UpdateMusicState(musicEnabled);
     }
 
+    // Public method to handle SFX toggle (controls both card and other SFX)
     public void OnSfxToggleValueChanged(bool isOn)
     {
-        isSfxMuted = !isOn;
+        isSfxMuted = !isOn; // Update the mute state based on the toggle
         UpdateAudioState(cardSfx, isOn);  // Control card SFX
         UpdateAudioState(otherSfx, isOn); // Control other SFX
         PlayerPrefs.SetInt("SFX_Toggle_State", isOn ? 1 : 0); // Save toggle state
@@ -62,6 +65,7 @@ public class AudioControl : MonoBehaviour
         return isSfxMuted;
     }
 
+    // Helper method to update the mute state of AudioSource arrays
     private void UpdateAudioState(AudioSource[] audioSources, bool isAudioOn)
     {
         if (audioSources != null)
@@ -76,11 +80,25 @@ public class AudioControl : MonoBehaviour
         }
     }
 
+    // Helper method to update the music mute state
     private void UpdateMusicState(bool isMusicOn)
     {
         if (music != null)
         {
             music.mute = !isMusicOn; // Mute/unmute music
         }
+    }
+
+    // Method to play audio clip at a specific position with mute check
+    public void PlayClipAtPosition(AudioClip clip, Vector3 position)
+    {
+        if (isSfxMuted || clip == null)
+        {
+            Debug.Log("Audio muted or clip is null, not playing audio."); // Log
+            return;
+        }
+
+        AudioSource.PlayClipAtPoint(clip, position);
+        Debug.Log("Playing audio clip at position: " + position); // Log
     }
 }

@@ -22,6 +22,7 @@ public class Interactions : MonoBehaviour
 
     public void PlayHover()
     {
+        Debug.Log(audioSource);
         audioSource.PlayOneShot(hover);
     }
 }

@@ -27,8 +27,12 @@ public class OverlayMenus : MonoBehaviour
     public void BackToMainMenu()
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene("Menu");
+        SceneManager.LoadScene("MainMenu");
         SceneManager.UnloadSceneAsync("Pause");
+        SceneManager.UnloadSceneAsync("Lose");
+        SceneManager.UnloadSceneAsync("Win");
+
+
     }
 
     private IEnumerator FadeOutAndResumeGame()
@@ -38,5 +42,7 @@ public class OverlayMenus : MonoBehaviour
         yield return new WaitForSecondsRealtime(pauseScreen.FadeTime);
 
         SceneManager.UnloadSceneAsync("Pause");
+        SceneManager.UnloadSceneAsync("Lose");
+        SceneManager.UnloadSceneAsync("Win");
     }
 }
