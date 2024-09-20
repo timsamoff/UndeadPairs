@@ -1474,7 +1474,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1207753472}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 14ddcd03ea3ac49458e63ef0c98882b2, type: 3}
   m_Name: 
@@ -2460,6 +2460,7 @@ GameObject:
   - component: {fileID: 2011039853}
   - component: {fileID: 2011039854}
   - component: {fileID: 2011039855}
+  - component: {fileID: 2011039856}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -2692,6 +2693,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2011039856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011039844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14ddcd03ea3ac49458e63ef0c98882b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthDecreasePercent: 100
+  healthBar: {fileID: 1687003186}
+  uiCanvasGroup: {fileID: 2011039852}
+  parentObject: {fileID: 1390689479}
+  fadeTime: 1.5
+  loseSceneName: Lose
 --- !u!1001 &2026317795
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2982,8 +3001,8 @@ SceneRoots:
   - {fileID: 254709415}
   - {fileID: 543006600}
   - {fileID: 2032842987}
+  - {fileID: 2011039848}
   - {fileID: 1390689481}
   - {fileID: 1476991138}
   - {fileID: 1742715910}
   - {fileID: 1104533918}
-  - {fileID: 2011039848}

@@ -19,7 +19,7 @@ public class LoseHealth : MonoBehaviour
     private CanvasGroup loseCanvasGroup;
     private bool isDead = false;
 
-    private void Start()
+    /*private void Start()
     {
         if (healthBar == null)
         {
@@ -29,6 +29,34 @@ public class LoseHealth : MonoBehaviour
         {
             healthBar.value = currentHealth / 100f;
         }
+    }*/
+
+    private void Update()
+    {
+        Debug.Log("Current Health: " + currentHealth);
+
+        if (parentObject == null && !isDead)
+        {
+            Debug.LogError("Parent object has been destroyed or missing!");
+        }
+    }
+
+    private void OnEnable()
+    {
+        ResetHealth();
+    }
+
+    public void ResetHealth()
+    {
+        currentHealth = 100f;
+
+        if (healthBar != null)
+        {
+            healthBar.value = currentHealth / 100f;
+        }
+        isDead = false;
+        Time.timeScale = 1f;
+        Debug.Log("Health reset to 100.");
     }
 
     public void ReduceHealth()
@@ -36,8 +64,11 @@ public class LoseHealth : MonoBehaviour
         currentHealth -= healthDecreasePercent;
         currentHealth = Mathf.Clamp(currentHealth, 0, 100);
 
-        // Update health bar UI
-        if (healthBar != null)
+        if (healthBar == null)
+        {
+            Debug.LogError("Health bar Slider not assigned.");
+        }
+        else
         {
             healthBar.value = currentHealth / 100f;
         }
@@ -131,7 +162,14 @@ public class LoseHealth : MonoBehaviour
 
     private void DisableCardClicks()
     {
-        CardFlip[] cardFlips = parentObject.GetComponentsInChildren<CardFlip>();
+        if (parentObject == null)
+        {
+            Debug.LogError("Parent object is missing or has been destroyed.");
+            return;
+        }
+
+        // CardFlip[] cardFlips = parentObject.GetComponentsInChildren<CardFlip>();
+        CardFlip[] cardFlips = parentObject.GetComponentsInChildren<CardFlip>(true);
 
         foreach (CardFlip cardFlip in cardFlips)
         {
