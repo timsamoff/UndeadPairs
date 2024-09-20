@@ -36,6 +36,13 @@ public class MainMenu : MonoBehaviour
         fadeToBlack.StartFade();
     }
 
+    public void About()
+    {
+        /*sceneToLoad = "About";
+        fadeToBlack.StartFade();*/
+        SceneManager.LoadScene("About");
+    }
+
     private void LoadScene()
     {
         SceneManager.LoadScene(sceneToLoad);

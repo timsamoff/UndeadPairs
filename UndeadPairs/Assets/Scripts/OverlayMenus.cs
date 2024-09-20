@@ -12,7 +12,7 @@ public class OverlayMenus : MonoBehaviour
 
         if (pauseScreen == null)
         {
-            Debug.LogError("PauseScreen script not found!");
+            Debug.Log("PauseScreen script not found!");
         }
     }
 
