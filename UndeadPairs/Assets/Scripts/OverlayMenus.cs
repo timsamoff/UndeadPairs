@@ -21,6 +21,7 @@ public class OverlayMenus : MonoBehaviour
         if (pauseScreen != null)
         {
             StartCoroutine(FadeOutAndResumeGame());
+            pauseScreen.OnResumeButtonPressed();
         }
     }
 

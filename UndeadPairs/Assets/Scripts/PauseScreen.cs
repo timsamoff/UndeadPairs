@@ -8,7 +8,7 @@ public class PauseScreen : MonoBehaviour
     [SerializeField] private CanvasGroup uiCanvasGroup;
     [SerializeField] private GameObject parentObject;
     [SerializeField] private float fadeTime = 1.0f;
-    [SerializeField] private string pauseSceneName = "Pause";  // Name of the Pause scene
+    [SerializeField] private string pauseSceneName = "Pause";
 
     private CanvasGroup pauseCanvasGroup;
     private bool isPaused = false;
@@ -23,10 +23,7 @@ public class PauseScreen : MonoBehaviour
         }
     }
 
-    public float FadeTime
-    {
-        get { return fadeTime; }
-    }
+    public float FadeTime => fadeTime;
 
     public void OnPauseButtonPressed()
     {
@@ -47,14 +44,9 @@ public class PauseScreen : MonoBehaviour
     private IEnumerator LoadPauseScene()
     {
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(pauseSceneName, LoadSceneMode.Additive);
-
-        while (!asyncLoad.isDone)
-        {
-            yield return null;
-        }
+        while (!asyncLoad.isDone) yield return null;
 
         Scene pauseScene = SceneManager.GetSceneByName(pauseSceneName);
-
         GameObject[] rootObjects = pauseScene.GetRootGameObjects();
 
         foreach (GameObject obj in rootObjects)
@@ -85,20 +77,12 @@ public class PauseScreen : MonoBehaviour
     {
         if (pauseCanvasGroup != null)
         {
-            // Fade out the pause scene UI
             yield return StartCoroutine(FadeOutCanvasGroup(pauseCanvasGroup));
         }
 
-        // Unload the Pause scene
         AsyncOperation asyncUnload = SceneManager.UnloadSceneAsync(pauseSceneName);
+        while (!asyncUnload.isDone) yield return null;
 
-        // Wait until the scene is fully unloaded
-        while (!asyncUnload.isDone)
-        {
-            yield return null;
-        }
-
-        // After the pause scene is unloaded, fade in the main UI canvas
         ResumeGame();
         StartCoroutine(FadeInCanvasGroup(uiCanvasGroup));
     }
@@ -112,9 +96,9 @@ public class PauseScreen : MonoBehaviour
     private void ResumeGame()
     {
         Time.timeScale = 1f;
-        Debug.Log("Resuming game... Time.timeScale set to: " + Time.timeScale);
         isPaused = false;
         EnableCardClicks();
+        InitializeUI();
     }
 
     private IEnumerator FadeInCanvasGroup(CanvasGroup canvasGroup)
@@ -132,8 +116,6 @@ public class PauseScreen : MonoBehaviour
         canvasGroup.alpha = 1;
         canvasGroup.interactable = true;
         canvasGroup.blocksRaycasts = true;
-
-        ResetPauseState();
     }
 
     private IEnumerator FadeOutCanvasGroup(CanvasGroup canvasGroup)
@@ -156,37 +138,21 @@ public class PauseScreen : MonoBehaviour
     private void DisableCardClicks()
     {
         CardFlip[] cardFlips = parentObject.GetComponentsInChildren<CardFlip>();
-
         foreach (CardFlip cardFlip in cardFlips)
         {
             Collider collider = cardFlip.GetComponent<Collider>();
-            if (collider != null)
-            {
-                collider.enabled = false;
-            }
+            if (collider != null) collider.enabled = false;
         }
     }
 
     private void EnableCardClicks()
     {
         CardFlip[] cardFlips = parentObject.GetComponentsInChildren<CardFlip>();
-
         foreach (CardFlip cardFlip in cardFlips)
         {
             Collider collider = cardFlip.GetComponent<Collider>();
-            if (collider != null)
-            {
-                collider.enabled = true;
-            }
+            if (collider != null) collider.enabled = true;
         }
-    }
-
-    public void ResetPauseState()
-    {
-        isPaused = false;
-        Debug.Log("Pause state: " + isPaused);
-
-        InitializeUI();
     }
 
     private void InitializeUI()
