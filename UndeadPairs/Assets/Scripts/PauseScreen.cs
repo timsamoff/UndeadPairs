@@ -154,7 +154,6 @@ public class PauseScreen : MonoBehaviour
             if (collider != null) collider.enabled = true;
         }
     }
-
     private void InitializeUI()
     {
         if (uiCanvasGroup != null)
