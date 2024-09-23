@@ -14,7 +14,6 @@ public class CardPlacement : MonoBehaviour
 
     [Header("Card Settings")]
     [SerializeField] private float cardEndHeight = 0.6f;
-
     public float CardEndHeight => cardEndHeight;
 
     [Header("Animation Settings")]
@@ -37,8 +36,12 @@ public class CardPlacement : MonoBehaviour
     [SerializeField] private AudioClip[] cardThrow;
     private AudioSource audioSource;
 
+    private PauseScreen pauseScreen;
+
     private void Start()
     {
+        pauseScreen = FindObjectOfType<PauseScreen>();
+
         // Card drop
         foreach (Transform child in transform)
         {

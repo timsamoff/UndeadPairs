@@ -38,8 +38,6 @@ public class MainMenu : MonoBehaviour
 
     public void About()
     {
-        /*sceneToLoad = "About";
-        fadeToBlack.StartFade();*/
         SceneManager.LoadScene("About");
     }
 

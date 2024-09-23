@@ -54,7 +54,9 @@ public class PauseScreen : MonoBehaviour
         }
 
         Scene pauseScene = SceneManager.GetSceneByName(pauseSceneName);
+
         GameObject[] rootObjects = pauseScene.GetRootGameObjects();
+
         foreach (GameObject obj in rootObjects)
         {
             CanvasGroup cg = obj.GetComponentInChildren<CanvasGroup>();
@@ -130,6 +132,8 @@ public class PauseScreen : MonoBehaviour
         canvasGroup.alpha = 1;
         canvasGroup.interactable = true;
         canvasGroup.blocksRaycasts = true;
+
+        ResetPauseState();
     }
 
     private IEnumerator FadeOutCanvasGroup(CanvasGroup canvasGroup)
@@ -174,6 +178,24 @@ public class PauseScreen : MonoBehaviour
             {
                 collider.enabled = true;
             }
+        }
+    }
+
+    public void ResetPauseState()
+    {
+        isPaused = false;
+        Debug.Log("Pause state: " + isPaused);
+
+        InitializeUI();
+    }
+
+    private void InitializeUI()
+    {
+        if (uiCanvasGroup != null)
+        {
+            uiCanvasGroup.alpha = 1;
+            uiCanvasGroup.interactable = true;
+            uiCanvasGroup.blocksRaycasts = true;
         }
     }
 }
