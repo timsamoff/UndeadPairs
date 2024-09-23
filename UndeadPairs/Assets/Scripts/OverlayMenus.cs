@@ -28,17 +28,27 @@ public class OverlayMenus : MonoBehaviour
     {
         Time.timeScale = 1;
         SceneManager.LoadScene("MainMenu");
-        SceneManager.UnloadSceneAsync("Pause");
-        SceneManager.UnloadSceneAsync("Lose");
-        SceneManager.UnloadSceneAsync("Win");
+
+        UnloadSceneIfLoaded("Pause");
+        UnloadSceneIfLoaded("Lose");
+        UnloadSceneIfLoaded("Win");
     }
 
+    // Coroutine to handle fade out and resume game
     private IEnumerator FadeOutAndResumeGame()
     {
         pauseScreen.OnResumeButtonPressed();
 
-        yield return new WaitForSecondsRealtime(pauseScreen.FadeTime);
+        yield return new WaitForSecondsRealtime(pauseScreen.FadeTime); // Wait for fade to finish
 
-        SceneManager.UnloadSceneAsync("Pause");
+        UnloadSceneIfLoaded("Pause");
+    }
+
+    private void UnloadSceneIfLoaded(string sceneName)
+    {
+        if (SceneManager.GetSceneByName(sceneName).isLoaded)
+        {
+            SceneManager.UnloadSceneAsync(sceneName);
+        }
     }
 }

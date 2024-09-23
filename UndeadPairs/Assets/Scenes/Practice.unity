@@ -318,6 +318,70 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!1 &200711356
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 200711358}
+  - component: {fileID: 200711357}
+  - component: {fileID: 200711359}
+  m_Layer: 0
+  m_Name: GameStateManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &200711357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 200711356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14ddcd03ea3ac49458e63ef0c98882b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthDecreasePercent: 1
+  healthBar: {fileID: 1687003186}
+  uiCanvasGroup: {fileID: 2011039852}
+  parentObject: {fileID: 1390689479}
+  loseSceneName: Lose
+--- !u!4 &200711358
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 200711356}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &200711359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 200711356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b080e217a5c38794f923b3c318599429, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiCanvasGroup: {fileID: 2011039852}
+  winSceneName: Win
 --- !u!1 &254709412
 GameObject:
   m_ObjectHideFlags: 0
@@ -1394,7 +1458,6 @@ GameObject:
   - component: {fileID: 1207753473}
   - component: {fileID: 1207753475}
   - component: {fileID: 1207753476}
-  - component: {fileID: 1207753477}
   m_Layer: 0
   m_Name: GameSession
   m_TagString: Untagged
@@ -1467,24 +1530,6 @@ MonoBehaviour:
   otherSfx:
   - {fileID: 2011039855}
   music: {fileID: 0}
---- !u!114 &1207753477
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1207753472}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14ddcd03ea3ac49458e63ef0c98882b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthDecreasePercent: 100
-  healthBar: {fileID: 1687003186}
-  uiCanvasGroup: {fileID: 2011039852}
-  parentObject: {fileID: 1390689479}
-  fadeTime: 1.5
-  loseSceneName: Lose
 --- !u!1001 &1342823080
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2460,7 +2505,6 @@ GameObject:
   - component: {fileID: 2011039853}
   - component: {fileID: 2011039854}
   - component: {fileID: 2011039855}
-  - component: {fileID: 2011039856}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -2693,24 +2737,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &2011039856
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2011039844}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14ddcd03ea3ac49458e63ef0c98882b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthDecreasePercent: 100
-  healthBar: {fileID: 1687003186}
-  uiCanvasGroup: {fileID: 2011039852}
-  parentObject: {fileID: 1390689479}
-  fadeTime: 1.5
-  loseSceneName: Lose
 --- !u!1001 &2026317795
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3002,6 +3028,7 @@ SceneRoots:
   - {fileID: 543006600}
   - {fileID: 2032842987}
   - {fileID: 2011039848}
+  - {fileID: 200711358}
   - {fileID: 1390689481}
   - {fileID: 1476991138}
   - {fileID: 1742715910}

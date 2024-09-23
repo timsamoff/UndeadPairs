@@ -30,6 +30,9 @@ public class CardFlip : MonoBehaviour
     private static List<CardFlip> flippedCards = new List<CardFlip>();
     private static int maxFlippedCards = 2;
 
+    private static int totalCardCount;
+    private static int matchedCardCount = 0;
+
     private CardPlacement cardPlacement;
 
     private MakeSplat makeSplat;
@@ -64,6 +67,8 @@ public class CardFlip : MonoBehaviour
         {
             Debug.LogError("LoseHealth component not found.");
         }
+
+        totalCardCount = FindObjectsOfType<CardFlip>().Length;
     }
 
     private void CalculateGridPosition()
@@ -281,6 +286,13 @@ public class CardFlip : MonoBehaviour
         if (isMatch)
         {
             Debug.Log("Cards match!");
+
+            matchedCardCount += 2;
+
+            if (matchedCardCount == totalCardCount)
+            {
+                FindObjectOfType<WinGame>().CheckForWinCondition(matchedCardCount, totalCardCount);
+            }
 
             if (gunBlast.Length > 0 && !AudioControl.Instance.IsSfxMuted())
             {

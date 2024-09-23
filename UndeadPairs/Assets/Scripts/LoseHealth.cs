@@ -13,27 +13,29 @@ public class LoseHealth : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private CanvasGroup uiCanvasGroup;
     [SerializeField] private GameObject parentObject;
-    [SerializeField] private float fadeTime = 1.0f;
+    // [SerializeField] private float fadeTime = 1.0f;
     [SerializeField] private string loseSceneName = "Lose";  // Name of the Lose scene
 
     private CanvasGroup loseCanvasGroup;
     private bool isDead = false;
 
-    /*private void Start()
+    private PauseScreen pauseScreen;
+
+    private void Start()
     {
-        if (healthBar == null)
+        pauseScreen = FindObjectOfType<PauseScreen>();
+
+        if (uiCanvasGroup != null)
         {
-            Debug.LogError("Health bar Slider not assigned.");
+            uiCanvasGroup.alpha = 1;
+            uiCanvasGroup.interactable = true;
+            uiCanvasGroup.blocksRaycasts = true;
         }
-        else
-        {
-            healthBar.value = currentHealth / 100f;
-        }
-    }*/
+    }
 
     private void Update()
     {
-        Debug.Log("Current Health: " + currentHealth);
+        // Debug.Log("Current Health: " + currentHealth);
 
         if (parentObject == null && !isDead)
         {
@@ -43,10 +45,16 @@ public class LoseHealth : MonoBehaviour
 
     private void OnEnable()
     {
-        ResetHealth();
+        Debug.Log("OnEnable called.");
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    public void ResetHealth()
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         currentHealth = 100f;
 
@@ -94,8 +102,8 @@ public class LoseHealth : MonoBehaviour
             yield return null;
         }
 
-        Scene pauseScene = SceneManager.GetSceneByName(loseSceneName);
-        GameObject[] rootObjects = pauseScene.GetRootGameObjects();
+        Scene loseScene = SceneManager.GetSceneByName(loseSceneName);
+        GameObject[] rootObjects = loseScene.GetRootGameObjects();
         foreach (GameObject obj in rootObjects)
         {
             CanvasGroup cg = obj.GetComponentInChildren<CanvasGroup>();
@@ -131,9 +139,9 @@ public class LoseHealth : MonoBehaviour
         float elapsedTime = 0f;
         canvasGroup.gameObject.SetActive(true);
 
-        while (elapsedTime < fadeTime)
+        while (elapsedTime < pauseScreen.FadeTime)
         {
-            canvasGroup.alpha = Mathf.Clamp01(elapsedTime / fadeTime);
+            canvasGroup.alpha = Mathf.Clamp01(elapsedTime / pauseScreen.FadeTime);
             elapsedTime += Time.unscaledDeltaTime;
             yield return null;
         }
@@ -149,9 +157,9 @@ public class LoseHealth : MonoBehaviour
         canvasGroup.interactable = false;
         canvasGroup.blocksRaycasts = false;
 
-        while (elapsedTime < fadeTime)
+        while (elapsedTime < pauseScreen.FadeTime)
         {
-            canvasGroup.alpha = 1 - Mathf.Clamp01(elapsedTime / fadeTime);
+            canvasGroup.alpha = 1 - Mathf.Clamp01(elapsedTime / pauseScreen.FadeTime);
             elapsedTime += Time.unscaledDeltaTime;
             yield return null;
         }
