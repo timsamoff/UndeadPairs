@@ -24,6 +24,18 @@ public class WinGame : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        // Example of how to access the matchedCardCount from CardFlip
+        int currentMatchedCards = CardFlip.MatchedCardCount;
+
+        // Check for win condition
+        if (currentMatchedCards == FindObjectsOfType<CardFlip>().Length)
+        {
+            CheckForWinCondition(currentMatchedCards, FindObjectsOfType<CardFlip>().Length);
+        }
+    }
+
     private void OnEnable()
     {
         Debug.Log("OnEnable called.");
@@ -49,11 +61,17 @@ public class WinGame : MonoBehaviour
 
     public void CheckForWinCondition(int matchedCardCount, int totalCardCount)
     {
-        Debug.Log("Matched card count: " + matchedCardCount + ", Total card count: " + totalCardCount);
-        if (matchedCardCount == totalCardCount / 2)
+        Debug.Log("Matched Card Count: " + matchedCardCount);
+        Debug.Log("Total Card Count: " + totalCardCount);
+
+        if (matchedCardCount == totalCardCount) // Check if all pairs are matched
         {
-            Debug.Log("All card pairs matched!");
+            Debug.Log("All cards matched!");
             StartCoroutine(LoadWinScene());
+        }
+        else
+        {
+            Debug.Log("Not all cards matched yet.");
         }
     }
 

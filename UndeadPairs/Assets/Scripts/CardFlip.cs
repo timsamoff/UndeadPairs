@@ -366,4 +366,9 @@ public class CardFlip : MonoBehaviour
         Debug.LogError("CardFront or Renderer not found.");
         return null;
     }
+
+    public static int MatchedCardCount
+    {
+        get { return matchedCardCount; }
+    }
 }
