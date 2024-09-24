@@ -38,8 +38,12 @@ public class CardPlacement : MonoBehaviour
 
     private PauseScreen pauseScreen;
 
+    private AudioControl audioControl;
+
     private void Start()
     {
+        audioControl = FindObjectOfType<AudioControl>();
+
         pauseScreen = FindObjectOfType<PauseScreen>();
 
         // Card drop
@@ -76,7 +80,7 @@ public class CardPlacement : MonoBehaviour
         float elapsedTime = 0;
         Vector3 targetPosition = new Vector3(originalPosition.x, cardEndHeight, originalPosition.z);
 
-        if (cardThrow.Length > 0)
+        if (cardThrow.Length > 0 && !audioControl.IsSfxMuted())
         {
             AudioClip randomCardThrow = cardThrow[Random.Range(0, cardThrow.Length)];
             audioSource.PlayOneShot(randomCardThrow);

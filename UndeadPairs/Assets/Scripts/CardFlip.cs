@@ -39,11 +39,15 @@ public class CardFlip : MonoBehaviour
 
     private LoseHealth loseHealth;
 
+    private AudioControl audioControl;
+
     private void Start()
     {
         makeSplat = FindObjectOfType<MakeSplat>();
 
         cardPlacement = GetComponentInParent<CardPlacement>();
+
+        audioControl = FindObjectOfType<AudioControl>();
 
         if (cardPlacement == null)
         {
@@ -149,7 +153,7 @@ public class CardFlip : MonoBehaviour
         isAllAnimationsComplete = false;  // Mark animations as incomplete
         isAnimating = true;
 
-        if (cardFlip.Length > 0)
+        if (cardFlip.Length > 0 && !audioControl.IsSfxMuted())
         {
             AudioClip randomCardFlip = cardFlip[Random.Range(0, cardFlip.Length)];
             audioSource.PlayOneShot(randomCardFlip);
@@ -294,7 +298,7 @@ public class CardFlip : MonoBehaviour
                 FindObjectOfType<WinGame>().CheckForWinCondition(matchedCardCount, totalCardCount);
             }
 
-            if (gunBlast.Length > 0 && !AudioControl.Instance.IsSfxMuted())
+            if (gunBlast.Length > 0 && !audioControl.IsSfxMuted())
             {
                 Debug.Log("Playing gun blast sound.");
 
@@ -321,7 +325,7 @@ public class CardFlip : MonoBehaviour
         {
             Debug.Log("Cards don't match.");
 
-            if (zombieGroan.Length > 0)
+            if (zombieGroan.Length > 0 && !audioControl.IsSfxMuted())
             {
                 AudioClip randomZombieGroan = zombieGroan[Random.Range(0, zombieGroan.Length)];
                 audioSource.PlayOneShot(randomZombieGroan);
