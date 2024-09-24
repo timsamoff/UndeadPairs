@@ -49,15 +49,18 @@ public class WinGame : MonoBehaviour
 
     public void CheckForWinCondition(int matchedCardCount, int totalCardCount)
     {
-        if (matchedCardCount == totalCardCount)
+        Debug.Log("Matched card count: " + matchedCardCount + ", Total card count: " + totalCardCount);
+        if (matchedCardCount == totalCardCount / 2)
         {
-            Debug.Log("All cards matched!");
+            Debug.Log("All card pairs matched!");
             StartCoroutine(LoadWinScene());
         }
     }
 
     private IEnumerator LoadWinScene()
     {
+        Debug.Log("Loading Win scene...");
+
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(winSceneName, LoadSceneMode.Additive);
 
         while (!asyncLoad.isDone)
