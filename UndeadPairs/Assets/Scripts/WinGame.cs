@@ -30,7 +30,7 @@ public class WinGame : MonoBehaviour
         int currentMatchedCards = CardFlip.MatchedCardCount;
 
         // Check for win condition
-        if (currentMatchedCards == FindObjectsOfType<CardFlip>().Length)
+        if (currentMatchedCards * 2 == FindObjectsOfType<CardFlip>().Length)
         {
             CheckForWinCondition(currentMatchedCards, FindObjectsOfType<CardFlip>().Length);
         }
