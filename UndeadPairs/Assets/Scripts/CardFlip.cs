@@ -176,10 +176,10 @@ public class CardFlip : MonoBehaviour
         Vector3 normalizedDirection = directionToCenter.normalized;
 
         // Define Z-axis nudge (same for all cards)
-        Vector3 zNudge = new Vector3(0, 0, Mathf.Sign(normalizedDirection.z) * cardPlacement.NudgeAmount);
+        Vector3 zNudge = new Vector3(0, 0, Mathf.Sign(normalizedDirection.z) * cardPlacement.NudgeVertAmount);
 
         // Adjust X movement based on distance
-        Vector3 xNudge = new Vector3(normalizedDirection.x * cardPlacement.NudgeAmount, 0, 0);
+        Vector3 xNudge = new Vector3(normalizedDirection.x * cardPlacement.NudgeHorizAmount, 0, 0);
 
         // Combine the nudges (X and Z axes)
         Vector3 nudgePosition = transform.position + zNudge + xNudge;

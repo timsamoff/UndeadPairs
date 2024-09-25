@@ -970,9 +970,9 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 0.19607843}
-    m_HighlightedColor: {r: 0.7176471, g: 0.027450982, b: 0.027450982, a: 1}
-    m_PressedColor: {r: 0.4433962, g: 0, b: 0, a: 1}
-    m_SelectedColor: {r: 0.7176471, g: 0.027450982, b: 0.027450982, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 0.6}
+    m_PressedColor: {r: 1, g: 1, b: 1, a: 0.8}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 0.6}
     m_DisabledColor: {r: 0, g: 0, b: 0, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -1526,10 +1526,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4125fce581b95ef449be0fd9c696a083, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardSfxParentObject: {fileID: 1390689479}
-  otherSfx:
-  - {fileID: 2011039855}
-  music: {fileID: 0}
 --- !u!1001 &1342823080
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1642,7 +1638,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridColumns: 4
   gridRows: 2
-  nudgeAmount: 1.4
+  nudgeHorizAmount: 3
+  nudgeVertAmount: 1.4
   cardEndHeight: 0.65
   delayRange: {x: 0, y: 1.5}
   bounceAmountRange: {x: 0.5, y: 1}
