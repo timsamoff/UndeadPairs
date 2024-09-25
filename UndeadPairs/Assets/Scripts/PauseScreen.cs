@@ -77,13 +77,44 @@ public class PauseScreen : MonoBehaviour
     {
         if (pauseCanvasGroup != null)
         {
+            Debug.Log("Fading out pauseCanvasGroup");
             yield return StartCoroutine(FadeOutCanvasGroup(pauseCanvasGroup));
         }
+        else
+        {
+            Debug.LogWarning("pauseCanvasGroup is null, skipping fade out.");
+        }
 
-        AsyncOperation asyncUnload = SceneManager.UnloadSceneAsync(pauseSceneName);
-        while (!asyncUnload.isDone) yield return null;
+        Debug.Log("Attempting to unload pause scene.");
+
+        // Check if the scene is loaded before attempting to unload it
+        Scene pauseScene = SceneManager.GetSceneByName(pauseSceneName);
+
+        if (pauseScene.isLoaded)
+        {
+            AsyncOperation asyncUnload = SceneManager.UnloadSceneAsync(pauseSceneName);
+            if (asyncUnload == null)
+            {
+                Debug.LogError("Failed to unload the pause scene. Check the scene name or loading state.");
+                yield break;
+            }
+
+            while (!asyncUnload.isDone)
+            {
+                Debug.Log("Waiting for scene to unload...");
+                yield return null;
+            }
+
+            Debug.Log("Scene unloaded successfully, resuming game.");
+        }
+        else
+        {
+            Debug.LogWarning($"Pause scene {pauseSceneName} is not loaded. Skipping unload.");
+        }
 
         ResumeGame();
+
+        Debug.Log("Fading in UI Canvas Group");
         StartCoroutine(FadeInCanvasGroup(uiCanvasGroup));
     }
 

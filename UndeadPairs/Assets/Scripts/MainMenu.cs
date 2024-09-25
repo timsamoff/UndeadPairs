@@ -6,9 +6,25 @@ public class MainMenu : MonoBehaviour
 {
     public FadeToBlack fadeToBlack;
 
+    private static bool gameLaunched = false;
+
     void Start()
     {
         fadeToBlack.onFadeComplete += LoadScene;
+
+        if (!gameLaunched)
+        {
+            ResetPlayerPrefs();
+            gameLaunched = true; // Set the flag to true after the initial reset
+        }
+    }
+
+    private void ResetPlayerPrefs()
+    {
+        // Reset the PlayerPrefs for SFX and Music toggles
+        PlayerPrefs.SetInt("SFX_Toggle_State", 1);
+        PlayerPrefs.SetInt("Music_Toggle_State", 1);
+        PlayerPrefs.Save();
     }
 
     private string sceneToLoad;

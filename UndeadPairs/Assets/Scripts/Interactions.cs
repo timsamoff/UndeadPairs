@@ -10,18 +10,14 @@ public class Interactions : MonoBehaviour
     [SerializeField] private AudioClip hover;
     [SerializeField] private AudioSource audioSource;
 
-    private AudioControl audioControl;
-
     void Start()
     {
-        audioControl = FindAnyObjectByType<AudioControl>();
-
         audioSource = GetComponent<AudioSource>();
     }
 
     public  void PlayClick()
     {
-        if (!audioControl.IsSfxMuted())
+        if (PlayerPrefs.GetInt("SFX_Toggle_State", 1) == 1)
         {
             audioSource.PlayOneShot(click);
         }
@@ -29,7 +25,7 @@ public class Interactions : MonoBehaviour
 
     public void PlayHover()
     {
-        if (!audioControl.IsSfxMuted())
+        if (PlayerPrefs.GetInt("SFX_Toggle_State", 1) == 1)
         {
             audioSource.PlayOneShot(hover);
         }
