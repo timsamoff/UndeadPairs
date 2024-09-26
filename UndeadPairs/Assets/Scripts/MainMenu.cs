@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
@@ -8,10 +9,16 @@ public class MainMenu : MonoBehaviour
 
     private static bool gameLaunched = false;
 
+    [SerializeField] private Button[] menuButtons;
+
     [SerializeField] private BackgroundMusic backgroundMusic;
+
+    private Interactions interactionsScript;
 
     void Start()
     {
+        interactionsScript = GetComponent<Interactions>();
+
         fadeToBlack.onFadeComplete += LoadScene;
 
         if (!gameLaunched)
@@ -34,30 +41,35 @@ public class MainMenu : MonoBehaviour
     public void PracticeStart()
     {
         sceneToLoad = "Practice";
+        DisableButtons();
         StartSceneTransition();
     }
 
     public void EasyStart()
     {
         sceneToLoad = "Easy";
+        DisableButtons();
         StartSceneTransition();
     }
 
     public void NormalStart()
     {
         sceneToLoad = "Normal";
+        DisableButtons();
         StartSceneTransition();
     }
 
     public void DifficultStart()
     {
         sceneToLoad = "Difficult";
+        DisableButtons();
         StartSceneTransition();
     }
 
     public void About()
     {
         sceneToLoad = "About";
+        DisableButtons();
         StartSceneTransition();
     }
 
@@ -72,6 +84,16 @@ public class MainMenu : MonoBehaviour
         yield return StartCoroutine(backgroundMusic.FadeOutMusic());
 
         fadeToBlack.StartFade();
+    }
+
+    private void DisableButtons()
+    {
+        foreach (Button button in menuButtons)
+        {
+            button.interactable = false;
+        }
+
+        interactionsScript.SoundOn(false);
     }
 
     private void LoadScene()

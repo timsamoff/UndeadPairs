@@ -1728,7 +1728,7 @@ GameObject:
   - component: {fileID: 951948106}
   - component: {fileID: 951948109}
   m_Layer: 5
-  m_Name: About
+  m_Name: About Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2088,6 +2088,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeToBlack: {fileID: 1260801641}
+  menuButtons:
+  - {fileID: 738804427}
+  - {fileID: 1271726448}
+  - {fileID: 1410914835}
+  - {fileID: 2038987129}
+  - {fileID: 951948106}
   backgroundMusic: {fileID: 797794590}
 --- !u!82 &1260801639
 AudioSource:
