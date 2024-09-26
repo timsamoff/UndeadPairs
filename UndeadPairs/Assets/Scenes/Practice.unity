@@ -349,16 +349,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14ddcd03ea3ac49458e63ef0c98882b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthDecreasePercent: 1
+  healthDecreasePercent: 30
   healthBar: {fileID: 1687003186}
   healthBarFill: {fileID: 477849051}
   defaultFillColor: {r: 1, g: 1, b: 1, a: 0.2}
-  damageFillColor: {r: 1, g: 0, b: 0, a: 0.5}
-  colorChangeDuration: 0.5
+  damageFillColor: {r: 1, g: 0, b: 0, a: 1}
+  damageFillDuration: 2
+  fillFadeTime: 0.5
   uiCanvasGroup: {fileID: 2011039852}
   parentObject: {fileID: 1390689479}
   loseSceneName: Lose
-  backgroundMusic: {fileID: 0}
+  backgroundMusic: {fileID: 1481443590}
 --- !u!4 &200711358
 Transform:
   m_ObjectHideFlags: 0
@@ -1712,6 +1713,34 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 2a7bffd911d58cc468551a5ca0955e82, type: 2}
   - {fileID: 2100000, guid: e54b22e54fbc5eb4081d34bcb8ba3860, type: 2}
   - {fileID: 2100000, guid: 63a357cd91a3ea54c84d620fb3152c82, type: 2}
+  - {fileID: 2100000, guid: 8fb3d41f237032843a8a7349cdb0b46a, type: 2}
+  - {fileID: 2100000, guid: 4976cd148c19fd04bb107903012e6ed7, type: 2}
+  - {fileID: 2100000, guid: 7f83d6656db139a459172ccb689d519c, type: 2}
+  - {fileID: 2100000, guid: 50bf57f4f1b18fa4392a0d4e37db2d0c, type: 2}
+  - {fileID: 2100000, guid: e30a57817f030a44a8bb4be3f935d9f8, type: 2}
+  - {fileID: 2100000, guid: 533e9980cdfc4e24994ea5f7500372fa, type: 2}
+  - {fileID: 2100000, guid: 23a14c3d4baff944fbe7779f80bcfad1, type: 2}
+  - {fileID: 2100000, guid: 7779d306034928b4fa471a3bcb325fe8, type: 2}
+  - {fileID: 2100000, guid: da16511a5be5eb541a399e01ea334b16, type: 2}
+  - {fileID: 2100000, guid: 3e26e55355ceb23428cb3159aafca54b, type: 2}
+  - {fileID: 2100000, guid: e7c6e56d659ed8c478abf61f348213dd, type: 2}
+  - {fileID: 2100000, guid: 92d91a54c185d94428fc960e14c2ae15, type: 2}
+  - {fileID: 2100000, guid: 4dc387f3598880b489dacdae3efb3859, type: 2}
+  - {fileID: 2100000, guid: 7418bd2954a0cc34b8068f9b04758de6, type: 2}
+  - {fileID: 2100000, guid: c4b83cc1123f13245b2e543525253bfa, type: 2}
+  - {fileID: 2100000, guid: c4b8d72e19dc24f449ecfa00781faaf2, type: 2}
+  - {fileID: 2100000, guid: abbcc5e63d471a346afa84dd9ddc9edb, type: 2}
+  - {fileID: 2100000, guid: b74da6bde141c7340b9dd466ac4206f4, type: 2}
+  - {fileID: 2100000, guid: bd6659b52164b7d48aaa5dd68b4d6079, type: 2}
+  - {fileID: 2100000, guid: d40b10eb4db085b46ae28abe6cd866d0, type: 2}
+  - {fileID: 2100000, guid: 4317259837d64b3478a39f433657205b, type: 2}
+  - {fileID: 2100000, guid: ece3e0edbc51e1b49ba96793f17dc615, type: 2}
+  - {fileID: 2100000, guid: 6e7568c979b335840ac83499555ec9fa, type: 2}
+  - {fileID: 2100000, guid: bf06dde6bae6a4c449e7b0a683232ae1, type: 2}
+  - {fileID: 2100000, guid: 2be92093e75f3cb478aa4505e75229bd, type: 2}
+  - {fileID: 2100000, guid: b3e0d44608c8dc34090790c056c9afac, type: 2}
+  - {fileID: 2100000, guid: f193c933f0f1b79489be8947013e6e88, type: 2}
+  - {fileID: 2100000, guid: b06d2967cf0a13a4a9e0b44b7a1a605e, type: 2}
 --- !u!114 &1390689483
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -66,7 +66,7 @@ public class WinGame : MonoBehaviour
         Debug.Log("Matched Card Count: " + matchedCardCount);
         Debug.Log("Total Card Count: " + totalCardCount);
 
-        if (matchedCardCount == totalCardCount) // Check if all pairs are matched
+        if (matchedCardCount * 2 == totalCardCount) // Check if all pairs are matched
         {
             Debug.Log("All cards matched!");
             StartCoroutine(LoadWinScene());
