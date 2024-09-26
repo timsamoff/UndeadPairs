@@ -12,6 +12,8 @@ public class WinGame : MonoBehaviour
 
     private PauseScreen pauseScreen;
 
+    [SerializeField] private BackgroundMusic backgroundMusic;
+
     private void Start()
     {
         pauseScreen = FindObjectOfType<PauseScreen>();
@@ -108,6 +110,7 @@ public class WinGame : MonoBehaviour
 
         StartCoroutine(FadeOutCanvasGroup(uiCanvasGroup));
         StartCoroutine(FadeInCanvasGroup(winCanvasGroup));
+        StartCoroutine(backgroundMusic.FadeOutMusic());
     }
 
     private IEnumerator FadeInCanvasGroup(CanvasGroup canvasGroup)

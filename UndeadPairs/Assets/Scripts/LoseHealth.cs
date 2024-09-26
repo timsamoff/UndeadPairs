@@ -8,6 +8,11 @@ public class LoseHealth : MonoBehaviour
     [Header("Player Health")]
     [SerializeField] private float healthDecreasePercent = 10f;
     [SerializeField] private Slider healthBar;
+    [SerializeField] private Image healthBarFill;
+    [SerializeField] private Color defaultFillColor = new Color(0f, 0f, 100f, 0.2f);  // Default color
+    [SerializeField] private Color damageFillColor = new Color(1f, 0f, 0f, 0.5f);  // Damage color
+    [SerializeField] private float damageFillDuration = 0.5f;  // Damage display time
+    [SerializeField] private float fillFadeTime = 0.5f;
     private float currentHealth = 100f;
 
     [Header("Settings")]
@@ -20,6 +25,8 @@ public class LoseHealth : MonoBehaviour
     private bool isDead = false;
 
     private PauseScreen pauseScreen;
+
+    [SerializeField] private BackgroundMusic backgroundMusic;
 
     private void Start()
     {
@@ -79,19 +86,44 @@ public class LoseHealth : MonoBehaviour
         else
         {
             healthBar.value = currentHealth / 100f;
+
+            StartCoroutine(FlashRed());
         }
 
         // Check if health is at 0%
         if (currentHealth <= 0)
         {
+            Image backgroundImage = healthBar.GetComponentsInChildren<Image>()[1];
+
             Debug.Log("Health has reached 0%!");
 
             if (!isDead)
             {
+                backgroundImage.color = damageFillColor;
                 StartCoroutine(LoadLoseScene());
             }
         }
     }
+
+    private IEnumerator FlashRed()
+    {
+        fillFadeTime = 0f;
+
+        Color startColor = healthBarFill.color;
+
+        healthBarFill.color = damageFillColor;
+
+        while (fillFadeTime < damageFillDuration)
+        {
+            healthBarFill.color = Color.Lerp(damageFillColor, defaultFillColor, fillFadeTime / damageFillDuration);
+            fillFadeTime += Time.deltaTime;
+            yield return null; // Wait for the next frame
+        }
+
+        // Set final color to normal color
+        healthBarFill.color = defaultFillColor;
+    }
+
 
     private IEnumerator LoadLoseScene()
     {
@@ -126,6 +158,7 @@ public class LoseHealth : MonoBehaviour
         DisableCardClicks();
         StartCoroutine(FadeOutCanvasGroup(uiCanvasGroup));
         StartCoroutine(FadeInCanvasGroup(loseCanvasGroup));
+        StartCoroutine(backgroundMusic.FadeOutMusic());
     }
 
     private void LoseGame()

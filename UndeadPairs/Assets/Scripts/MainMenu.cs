@@ -8,6 +8,8 @@ public class MainMenu : MonoBehaviour
 
     private static bool gameLaunched = false;
 
+    [SerializeField] private BackgroundMusic backgroundMusic;
+
     void Start()
     {
         fadeToBlack.onFadeComplete += LoadScene;
@@ -15,7 +17,7 @@ public class MainMenu : MonoBehaviour
         if (!gameLaunched)
         {
             ResetPlayerPrefs();
-            gameLaunched = true; // Set the flag to true after the initial reset
+            gameLaunched = true; // Set to true after the initial reset
         }
     }
 
@@ -32,29 +34,44 @@ public class MainMenu : MonoBehaviour
     public void PracticeStart()
     {
         sceneToLoad = "Practice";
-        fadeToBlack.StartFade();
+        StartSceneTransition();
     }
 
     public void EasyStart()
     {
-        fadeToBlack.StartFade();
+        sceneToLoad = "Easy";
+        StartSceneTransition();
     }
 
     public void NormalStart()
     {
         sceneToLoad = "Normal";
-        fadeToBlack.StartFade();
+        StartSceneTransition();
     }
 
     public void DifficultStart()
     {
         sceneToLoad = "Difficult";
-        fadeToBlack.StartFade();
+        StartSceneTransition();
     }
 
     public void About()
     {
-        SceneManager.LoadScene("About");
+        sceneToLoad = "About";
+        StartSceneTransition();
+    }
+
+    private void StartSceneTransition()
+    {
+        StartCoroutine(FadeOutAndTransition());
+    }
+
+    private IEnumerator FadeOutAndTransition()
+    {
+        // Start fading out the music
+        yield return StartCoroutine(backgroundMusic.FadeOutMusic());
+
+        fadeToBlack.StartFade();
     }
 
     private void LoadScene()
