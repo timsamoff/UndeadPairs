@@ -15,6 +15,9 @@ public class SetCursor : MonoBehaviour
 
     void Start()
     {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+
         cursorHotspot = new Vector2(cursorTexture.width / 2, cursorTexture.height / 2);
         defaultCursorHotspot = new Vector2(defaultCursorTexture.width / 2, defaultCursorTexture.height / 2);
         Cursor.SetCursor(defaultCursorTexture, defaultCursorHotspot, CursorMode.ForceSoftware); // Set default cursor initially

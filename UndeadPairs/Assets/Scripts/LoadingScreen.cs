@@ -1,41 +1,44 @@
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class LoadingScreen : MonoBehaviour
 {
     [Header("Settings")]
-    [SerializeField] private Image loadingRing = null;
-    [SerializeField] private float fillSpeed = 0.1f;
-    [SerializeField] private float maxTimer = 1.0f;
-    [SerializeField] private float delayBeforeNextScene = 0.5f;
+    [SerializeField] private Image loadingImage;
+    [SerializeField] private float loadingTime = 3f;
+    [SerializeField] private float delayBeforeSceneChange = 2f;
+    [SerializeField] private Color loadingColor = new Color(0.69f, 0.06f, 0.02f); // Default to #B10F06
 
-    private bool isLoading = true;
+    private float currentTime = 0f;
 
-    private void Start()
+    void Start()
     {
-        isLoading = true;
-        loadingRing.enabled = false;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+
+        loadingImage.color = loadingColor;
+
+        loadingImage.fillAmount = 0f;
     }
 
-    private void Update()
+    void Update()
     {
-        if (isLoading)
+        if (currentTime < loadingTime)
         {
-            loadingRing.enabled = true;
-            loadingRing.fillAmount += fillSpeed * Time.deltaTime;
+            currentTime += Time.deltaTime;
+            loadingImage.fillAmount = currentTime / loadingTime;
+        }
+        else
+        {
+            loadingImage.fillAmount = 1f;
 
-            if (loadingRing.fillAmount >= maxTimer)
-            {
-                isLoading = false;
-                loadingRing.fillAmount = maxTimer;
-                Invoke("LoadNextScene", delayBeforeNextScene);
-            }
+            Invoke("LoadMainMenu", delayBeforeSceneChange);
         }
     }
 
-    private void LoadNextScene()
+    void LoadMainMenu()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("MainMenu");
     }
 }

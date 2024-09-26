@@ -586,6 +586,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   loadingImage: {fileID: 1254406602}
   loadingTime: 4
+  delayBeforeSceneChange: 2
   loadingColor: {r: 0.4, g: 0.005263158, b: 0, a: 1}
 --- !u!114 &1524125305
 MonoBehaviour:
@@ -618,6 +619,8 @@ MonoBehaviour:
   images:
   - {fileID: 21300000, guid: bff5be5488587d643990310a3b7f1736, type: 3}
   - {fileID: 21300000, guid: aa16bbfb8986a6246a02f567238bddf8, type: 3}
+  - {fileID: 21300000, guid: d2e075362f0ca694d85df35576a51d3a, type: 3}
+  - {fileID: 21300000, guid: 891b80dbc659be04f9b835034548032a, type: 3}
 --- !u!1 &1578170186
 GameObject:
   m_ObjectHideFlags: 0
