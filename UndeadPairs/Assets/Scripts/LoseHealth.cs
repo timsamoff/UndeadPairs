@@ -18,8 +18,8 @@ public class LoseHealth : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private CanvasGroup uiCanvasGroup;
     [SerializeField] private GameObject parentObject;
-    // [SerializeField] private float fadeTime = 1.0f;
     [SerializeField] private string loseSceneName = "Lose";  // Name of the Lose scene
+    [SerializeField] private bool practiceMode = false;
 
     private CanvasGroup loseCanvasGroup;
     private bool isDead = false;
@@ -32,6 +32,8 @@ public class LoseHealth : MonoBehaviour
     {
         pauseScreen = FindObjectOfType<PauseScreen>();
 
+        practiceMode = false;
+
         if (uiCanvasGroup != null)
         {
             uiCanvasGroup.alpha = 1;
@@ -42,12 +44,12 @@ public class LoseHealth : MonoBehaviour
 
     private void Update()
     {
-        // Debug.Log("Current Health: " + currentHealth);
-
         if (parentObject == null && !isDead)
         {
             Debug.LogError("Parent object has been destroyed or missing!");
         }
+
+        Debug.Log("Practice Mode: " + practiceMode);
     }
 
     private void OnEnable()
@@ -74,36 +76,49 @@ public class LoseHealth : MonoBehaviour
         Debug.Log("Health reset to 100.");
     }
 
+    public bool PracticeMode
+    {
+        get { return practiceMode; }
+        set { practiceMode = value; }
+    }
+
     public void ReduceHealth()
     {
-        currentHealth -= healthDecreasePercent;
-        currentHealth = Mathf.Clamp(currentHealth, 0, 100);
-
-        if (healthBar == null)
+        if (!practiceMode) // If not in practice mode, health decreases
         {
-            Debug.LogError("Health bar Slider not assigned.");
+            currentHealth -= healthDecreasePercent;
+            currentHealth = Mathf.Clamp(currentHealth, 0, 100);
+
+            if (healthBar == null)
+            {
+                Debug.LogError("Health bar Slider not assigned.");
+            }
+            else
+            {
+                healthBar.value = currentHealth / 100f;
+
+                StartCoroutine(FlashRed());
+            }
+
+            // Check if health is at 0%
+            if (currentHealth <= 0)
+            {
+                Image backgroundImage = healthBar.GetComponentsInChildren<Image>()[1];
+                Debug.Log("Health has reached 0%!");
+
+                if (!isDead)
+                {
+                    backgroundImage.color = damageFillColor;
+
+                    StartCoroutine(backgroundMusic.FadeOutMusic());
+                    StartCoroutine(LoadLoseScene());
+                }
+            }
         }
         else
         {
-            healthBar.value = currentHealth / 100f;
-
+            // In practice mode, just flash red
             StartCoroutine(FlashRed());
-        }
-
-        // Check if health is at 0%
-        if (currentHealth <= 0)
-        {
-            Image backgroundImage = healthBar.GetComponentsInChildren<Image>()[1];
-
-            Debug.Log("Health has reached 0%!");
-
-            if (!isDead)
-            {
-                backgroundImage.color = damageFillColor;
-
-                StartCoroutine(backgroundMusic.FadeOutMusic());
-                StartCoroutine(LoadLoseScene());
-            }
         }
     }
 
@@ -125,7 +140,6 @@ public class LoseHealth : MonoBehaviour
         // Set final color to normal color
         healthBarFill.color = defaultFillColor;
     }
-
 
     private IEnumerator LoadLoseScene()
     {
@@ -164,8 +178,11 @@ public class LoseHealth : MonoBehaviour
 
     private void LoseGame()
     {
-        Time.timeScale = 0f;
-        isDead = true;
+        if (!practiceMode) // Prevent LoseGame logic in practice mode
+        {
+            Time.timeScale = 0f;
+            isDead = true;
+        }
     }
 
     private IEnumerator FadeInCanvasGroup(CanvasGroup canvasGroup)
@@ -210,7 +227,6 @@ public class LoseHealth : MonoBehaviour
             return;
         }
 
-        // CardFlip[] cardFlips = parentObject.GetComponentsInChildren<CardFlip>();
         CardFlip[] cardFlips = parentObject.GetComponentsInChildren<CardFlip>(true);
 
         foreach (CardFlip cardFlip in cardFlips)

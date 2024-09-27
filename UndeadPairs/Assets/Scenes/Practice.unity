@@ -360,6 +360,7 @@ MonoBehaviour:
   parentObject: {fileID: 1390689479}
   loseSceneName: Lose
   backgroundMusic: {fileID: 1481443590}
+  practiceMode: 1
 --- !u!4 &200711358
 Transform:
   m_ObjectHideFlags: 0
