@@ -30,7 +30,7 @@ public class MainMenu : MonoBehaviour
 
     private void ResetPlayerPrefs()
     {
-        // Reset the PlayerPrefs for SFX and Music toggles
+        // Reset PlayerPrefs for SFX and Music toggles
         PlayerPrefs.SetInt("SFX_Toggle_State", 1);
         PlayerPrefs.SetInt("Music_Toggle_State", 1);
         PlayerPrefs.Save();
@@ -38,12 +38,12 @@ public class MainMenu : MonoBehaviour
 
     private string sceneToLoad;
 
-    public void PracticeStart()
+    /*public void PracticeStart()
     {
         sceneToLoad = "Practice";
         DisableButtons();
         StartSceneTransition();
-    }
+    }*/
 
     public void EasyStart()
     {

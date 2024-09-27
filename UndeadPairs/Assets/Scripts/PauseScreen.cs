@@ -87,7 +87,7 @@ public class PauseScreen : MonoBehaviour
 
         Debug.Log("Attempting to unload pause scene.");
 
-        // Check if the scene is loaded before attempting to unload it
+        // Check if scene is loaded before trying to unload it
         Scene pauseScene = SceneManager.GetSceneByName(pauseSceneName);
 
         if (pauseScene.isLoaded)
@@ -95,7 +95,7 @@ public class PauseScreen : MonoBehaviour
             AsyncOperation asyncUnload = SceneManager.UnloadSceneAsync(pauseSceneName);
             if (asyncUnload == null)
             {
-                Debug.LogError("Failed to unload the pause scene. Check the scene name or loading state.");
+                Debug.LogError("Failed to unload pause scene.");
                 yield break;
             }
 
@@ -105,7 +105,7 @@ public class PauseScreen : MonoBehaviour
                 yield return null;
             }
 
-            Debug.Log("Scene unloaded successfully, resuming game.");
+            Debug.Log("Scene unloaded, resuming game.");
         }
         else
         {

@@ -21,10 +21,11 @@ public class CardPlacement : MonoBehaviour
     [Header("Animation Settings")]
     [SerializeField] private Vector2 delayRange = new Vector2(0f, 2f); // Range for random delay before falling
     [SerializeField] private Vector2 bounceAmountRange = new Vector2(0.02f, 0.1f); // Range for how high the object bounces
-    [SerializeField] private float fallSpeed = 1.0f; // Adjust the fall speed in the inspector
+    [SerializeField] private float fallSpeed = 1.0f;
 
     [Header("Bounce Settings")]
-    [SerializeField] private float bounceSpeed = 0.1f; // Speed of the bounce (higher value = quicker bounce)
+    [Tooltip("Higher value = quicker bounce")]
+    [SerializeField] private float bounceSpeed = 0.1f; // Speed of the bounce
 
     // Rotation amount range for both X and Z axes (in degrees)
     [SerializeField] private Vector2 rotationRange = new Vector2(0f, 1f);
@@ -63,18 +64,18 @@ public class CardPlacement : MonoBehaviour
 
     private IEnumerator FallAndBounce(Transform prefabParent)
     {
-        // Save the original position and rotation of the empty parent object
+        // Save original position and rotation of empty parent object
         Vector3 originalPosition = prefabParent.position;
         Quaternion originalRotation = prefabParent.rotation;
 
-        // Calculate the start height based on the card's original position
+        // Calculate start height based on card's original position
         float cardStartHeight = originalPosition.y;
 
-        // Where the cards will start falling from
+        // Where cards will start falling from
         Vector3 startPosition = new Vector3(originalPosition.x, cardStartHeight, originalPosition.z); // 10f is an example offset
         prefabParent.position = startPosition;
 
-        // Random delay before the cards start falling
+        // Random delay before cards start falling
         float delay = Random.Range(delayRange.x, delayRange.y);
         yield return new WaitForSeconds(delay);
 
@@ -98,11 +99,11 @@ public class CardPlacement : MonoBehaviour
 
         prefabParent.position = targetPosition;
 
-        // Bounce the card
+        // Bounce card
         float bounceAmount = Random.Range(bounceAmountRange.x, bounceAmountRange.y);
         Vector3 bounceUp = new Vector3(originalPosition.x, cardEndHeight + bounceAmount, originalPosition.z);
 
-        // Randomize the rotation amounts for X and Z axes
+        // Randomize rotation amounts for X and Z axes
         float randomRotationX = Random.Range(rotationRange.x, rotationRange.y);
         float randomRotationZ = Random.Range(rotationRange.x, rotationRange.y);
 
@@ -110,11 +111,11 @@ public class CardPlacement : MonoBehaviour
         float randomRotationDirectionX = enableXRotation && Random.value > 0.5f ? 1f : -1f;
         float randomRotationDirectionZ = enableZRotation && Random.value > 0.5f ? 1f : -1f;
 
-        // Apply the rotation to the cards on bounce
+        // Apply rotation to cards on bounce
         float actualRotationXAmount = enableXRotation ? randomRotationX * randomRotationDirectionX : 0f;
         float actualRotationZAmount = enableZRotation ? randomRotationZ * randomRotationDirectionZ : 0f;
 
-        // Bounce and rotation
+        // Bounce and rotate
         elapsedTime = 0;
         while (elapsedTime < bounceSpeed)
         {
@@ -144,7 +145,7 @@ public class CardPlacement : MonoBehaviour
             yield return null;
         }
 
-        // Ensure the cards return to their destinations after bouncing
+        // Ensure cards return to destinations after bounce
         prefabParent.position = targetPosition;
         prefabParent.rotation = originalRotation;
     }

@@ -36,7 +36,7 @@ public class OverlayMenus : MonoBehaviour
         UnloadSceneIfLoaded("Win");
     }
 
-    // Coroutine to handle fade out and resume game
+    // Fade out and resume game
     private IEnumerator FadeOutAndResumeGame()
     {
         pauseScreen.OnResumeButtonPressed();

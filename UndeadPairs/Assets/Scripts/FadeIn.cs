@@ -14,7 +14,7 @@ public class FadeIn : MonoBehaviour
     {
         if (fadeImage == null)
         {
-            Debug.LogError("Fade image not assigned. Please assign an Image in the Inspector.");
+            Debug.LogError("Fade image not assigned in Inspector.");
             return;
         }
 

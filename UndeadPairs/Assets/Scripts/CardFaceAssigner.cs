@@ -24,21 +24,21 @@ public class CardFaceAssigner : MonoBehaviour
             return;
         }
 
-        // Create a list from the material library and shuffle it
+        // Create a list from the material library and shuffle
         List<Material> shuffledMaterials = new List<Material>(materialLibrary);
         Shuffle(shuffledMaterials);
 
         // List of pairs of materials
         List<Material> materialPairs = new List<Material>();
 
-        // Pairs of materials, ensuring that each game can use different materials
+        // Pairs of materials so that each game uses different materials
         for (int i = 0; i < requiredPairs; i++)
         {
             materialPairs.Add(shuffledMaterials[i]);
             materialPairs.Add(shuffledMaterials[i]);
         }
 
-        // Shuffle the material pairs
+        // Shuffle material pairs
         Shuffle(materialPairs);
 
         // Assign materials
@@ -49,10 +49,10 @@ public class CardFaceAssigner : MonoBehaviour
 
             if (frontPlane != null)
             {
-                // Assign the material
+                // Assign material
                 frontPlane.material = materialPairs[i];
 
-                // Rotate the texture 180 degrees on the Y axis
+                // Have to rotate the texture 180 degrees on the Y axis (shrug)
                 frontPlane.material.mainTextureOffset = new Vector2(1, 0);
                 frontPlane.material.mainTextureScale = new Vector2(-1, 1);
             }
@@ -65,10 +65,10 @@ public class CardFaceAssigner : MonoBehaviour
 
     private GameObject[] GetCardPrefabs()
     {
-        // Find all of the cards
+        // Find all cards
         Transform[] children = GetComponentsInChildren<Transform>();
 
-        // Collect unique card prefabs
+        // Determine unique card prefabs
         List<GameObject> cardPrefabs = new List<GameObject>();
 
         foreach (var child in children)

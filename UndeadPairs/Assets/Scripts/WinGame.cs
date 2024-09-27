@@ -7,7 +7,7 @@ public class WinGame : MonoBehaviour
 {
     [Header("Win Settings")]
     [SerializeField] private CanvasGroup uiCanvasGroup;
-    [SerializeField] private string winSceneName = "Win";  // Name of the Win scene
+    [SerializeField] private string winSceneName = "Win";
     private CanvasGroup winCanvasGroup;
 
     private PauseScreen pauseScreen;
@@ -28,10 +28,9 @@ public class WinGame : MonoBehaviour
 
     private void Update()
     {
-        // Example of how to access the matchedCardCount from CardFlip
         int currentMatchedCards = CardFlip.MatchedCardCount;
 
-        // Check for win condition
+        // Check for victory condition
         if (currentMatchedCards * 2 == FindObjectsOfType<CardFlip>().Length)
         {
             CheckForWinCondition(currentMatchedCards, FindObjectsOfType<CardFlip>().Length);
@@ -51,7 +50,7 @@ public class WinGame : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // Reset UI or other parameters as necessary
+        // Reset UI
         if (uiCanvasGroup != null)
         {
             uiCanvasGroup.alpha = 1;

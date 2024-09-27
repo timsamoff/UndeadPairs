@@ -6,8 +6,8 @@ public class UIFadeIn : MonoBehaviour
 {
     [SerializeField] private float timeBeforeFade = 1f;
     [SerializeField] private float fadeTime = 2f;
-    [SerializeField] private Graphic[] buttons; // Drag your button UI elements here
-    [SerializeField] private Slider[] sliders;  // Drag your slider UI elements here
+    [SerializeField] private Graphic[] buttons;
+    [SerializeField] private Slider[] sliders;
 
     private Color[] sliderBackgroundOriginalColors;
     private Color[] sliderFillOriginalColors;
@@ -26,8 +26,8 @@ public class UIFadeIn : MonoBehaviour
         {
             if (sliders[i] != null)
             {
-                var backgroundGraphic = sliders[i].GetComponentsInChildren<Graphic>()[0]; // Assume the first Graphic is the background
-                var fillGraphic = sliders[i].GetComponentsInChildren<Graphic>()[1]; // Assume the second Graphic is the fill
+                var backgroundGraphic = sliders[i].GetComponentsInChildren<Graphic>()[0];
+                var fillGraphic = sliders[i].GetComponentsInChildren<Graphic>()[1];
 
                 if (backgroundGraphic != null)
                 {
@@ -55,18 +55,16 @@ public class UIFadeIn : MonoBehaviour
             }
         }
 
-        // Start the fade-in sequence
+        // Start fade-in
         StartCoroutine(FadeInAfterDelay());
     }
 
     private IEnumerator FadeInAfterDelay()
     {
-        // Wait for the specified delay before starting the fade
         yield return new WaitForSeconds(timeBeforeFade);
 
         float elapsedTime = 0f;
 
-        // Gradually increase the alpha value from 0 to 1 for all UI elements
         while (elapsedTime < fadeTime)
         {
             elapsedTime += Time.deltaTime;
@@ -80,7 +78,7 @@ public class UIFadeIn : MonoBehaviour
             yield return null;
         }
 
-        // Ensure all UI elements reach their final alpha values
+        // Make sure that all UI elements reach their final alpha values
         SetAlphaForButtons(1f);
         SetAlphaForSliders(1f);
     }

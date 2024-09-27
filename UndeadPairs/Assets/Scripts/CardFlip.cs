@@ -166,15 +166,15 @@ public class CardFlip : MonoBehaviour
         float targetZRotation = toFlipped ? (currentZRotation + 180f) % 360f : (currentZRotation - 180f + 360f) % 360f;
         Quaternion targetRotation = Quaternion.Euler(0, 0, targetZRotation);
 
-        // Calculate the center of the screen in world space
+        // Calculate center of the screen in world space
         Vector3 screenCenter = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, Camera.main.nearClipPlane));
         screenCenter.y = transform.position.y; // Keep the Y consistent with the card's Y position
 
-        // Calculate the direction to the center (X-Z plane)
+        // Calculate direction to center (X-Z plane)
         Vector3 directionToCenter = screenCenter - transform.position;
         directionToCenter.y = 0;  // Ignore Y-axis for direction
 
-        // Calculate the normalized direction
+        // Calculate normalized direction
         Vector3 normalizedDirection = directionToCenter.normalized;
 
         // Define Z-axis nudge (same for all cards)
@@ -305,8 +305,7 @@ public class CardFlip : MonoBehaviour
                 Debug.Log("Playing gun blast sound.");
 
                 AudioClip randomGunBlast = gunBlast[Random.Range(0, gunBlast.Length)];
-                // AudioSource.PlayClipAtPoint(randomGunBlast, Camera.main.transform.position);
-                // Do this from AudioControl
+
                 AudioControl.Instance.PlayClipAtPosition(randomGunBlast, Camera.main.transform.position);
 
             }
@@ -319,9 +318,6 @@ public class CardFlip : MonoBehaviour
 
             Destroy(card1.gameObject);
             Destroy(card2.gameObject);
-
-            //card1.gameObject.SetActive(false);
-            //card2.gameObject.SetActive(false);
         }
         else
         {

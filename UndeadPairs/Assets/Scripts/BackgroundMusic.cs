@@ -44,7 +44,7 @@ public class BackgroundMusic : MonoBehaviour
             yield return null;
         }
 
-        audioSource.volume = 1f; // Music at full volume when finished fading in
+        audioSource.volume = 1f; // Music at full volume
     }
 
 

@@ -927,7 +927,7 @@ GameObject:
   - component: {fileID: 679651736}
   - component: {fileID: 679651735}
   m_Layer: 5
-  m_Name: Instruction Text
+  m_Name: Instructions Line 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1317,7 +1317,7 @@ GameObject:
   - component: {fileID: 1272242424}
   - component: {fileID: 1272242423}
   m_Layer: 5
-  m_Name: Instruction Text (1)
+  m_Name: Instruction Line 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1362,7 +1362,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Click pause to change audio settings or enter "practice" mode."
+  m_text: Click pause to change audio settings or turn on "practice mode."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 55c64327892edbe43a1e28c61431770f, type: 2}
   m_sharedMaterial: {fileID: 1367333407339114717, guid: 55c64327892edbe43a1e28c61431770f,

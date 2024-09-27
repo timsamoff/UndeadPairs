@@ -18,7 +18,7 @@ public class LoseHealth : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private CanvasGroup uiCanvasGroup;
     [SerializeField] private GameObject parentObject;
-    [SerializeField] private string loseSceneName = "Lose";  // Name of the Lose scene
+    [SerializeField] private string loseSceneName = "Lose";
     [SerializeField] private bool practiceMode = false;
 
     private CanvasGroup loseCanvasGroup;
@@ -46,10 +46,8 @@ public class LoseHealth : MonoBehaviour
     {
         if (parentObject == null && !isDead)
         {
-            Debug.LogError("Parent object has been destroyed or missing!");
+            Debug.LogError("Parent object destroyed or missing!");
         }
-
-        Debug.Log("Practice Mode: " + practiceMode);
     }
 
     private void OnEnable()
@@ -84,7 +82,7 @@ public class LoseHealth : MonoBehaviour
 
     public void ReduceHealth()
     {
-        if (!practiceMode) // If not in practice mode, health decreases
+        if (!practiceMode) // Health decreases when not in Practice Mode
         {
             currentHealth -= healthDecreasePercent;
             currentHealth = Mathf.Clamp(currentHealth, 0, 100);
@@ -117,7 +115,7 @@ public class LoseHealth : MonoBehaviour
         }
         else
         {
-            // In practice mode, just flash red
+            // Just flash red when in Practice Mode
             StartCoroutine(FlashRed());
         }
     }

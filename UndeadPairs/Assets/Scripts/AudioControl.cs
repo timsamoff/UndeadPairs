@@ -5,7 +5,7 @@ public class AudioControl : MonoBehaviour
     public static AudioControl Instance { get; private set; }
 
     private bool isSfxMuted = false;
-    private bool isMusicMuted = false; // Add this if you want to handle music muting similarly
+    private bool isMusicMuted = false;
 
     private void Awake()
     {
@@ -33,7 +33,7 @@ public class AudioControl : MonoBehaviour
 
         // Apply the loaded settings
         isSfxMuted = !sfxEnabled;
-        isMusicMuted = !musicEnabled; // If you want to use this for music muting
+        isMusicMuted = !musicEnabled;
     }
 
     public void OnSfxToggleValueChanged(bool isOn)
@@ -55,7 +55,6 @@ public class AudioControl : MonoBehaviour
         return isSfxMuted;
     }
 
-    // Optional: If you handle music similarly
     public bool IsMusicMuted()
     {
         return isMusicMuted;
