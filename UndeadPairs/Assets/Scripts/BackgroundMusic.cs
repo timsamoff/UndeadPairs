@@ -13,19 +13,10 @@ public class BackgroundMusic : MonoBehaviour
     {
         backgroundMusic = GetComponent<AudioSource>();
 
-        if (PlayerPrefs.GetInt("SFX_Toggle_State", 1) == 1)
+        if (PlayerPrefs.GetInt("Music_Toggle_State", 1) == 1)
         {
-            // Randomly select an audio clip
-            if (musicClips.Length > 0)
-            {
-                AudioClip selectedClip = musicClips[Random.Range(0, musicClips.Length)];
-                backgroundMusic.clip = selectedClip;
-                backgroundMusic.Play();
-            }
-
-            // Fade in music
-            backgroundMusic.volume = 0f;
-            StartCoroutine(FadeInMusic(backgroundMusic));
+            PlayMusic();
+            StartCoroutine(FadeInMusic());
         }
         else
         {
@@ -33,24 +24,42 @@ public class BackgroundMusic : MonoBehaviour
         }
     }
 
-    IEnumerator FadeInMusic(AudioSource audioSource)
+    public void PlayMusic()
+    {
+        // Randomly select an audio clip
+        if (musicClips.Length > 0)
+        {
+            AudioClip selectedClip = musicClips[Random.Range(0, musicClips.Length)];
+            backgroundMusic.clip = selectedClip;
+            backgroundMusic.Play();
+        }
+    }
+
+    public IEnumerator FadeInMusic()
     {
         float currentTime = 0f;
+        backgroundMusic.volume = 0f; // Music starts at 0
 
+        if (!backgroundMusic.isPlaying)
+        {
+            PlayMusic(); // Start playing the music if it's not already playing
+        }
+
+        // Fade in the music over time
         while (currentTime < fadeTime)
         {
             currentTime += Time.unscaledDeltaTime;
-            audioSource.volume = Mathf.Lerp(0f, 1f, currentTime / fadeTime);
+            backgroundMusic.volume = Mathf.Lerp(0f, 1f, currentTime / fadeTime);
             yield return null;
         }
 
-        audioSource.volume = 1f; // Music at full volume
+        backgroundMusic.volume = 1f; // Set music to full volume when done
     }
-
 
     public IEnumerator FadeOutMusic()
     {
         Debug.Log("Fading out music");
+
         if (!backgroundMusic.isPlaying)
         {
             Debug.LogWarning("AudioSource is already stopped!");
@@ -60,6 +69,7 @@ public class BackgroundMusic : MonoBehaviour
         float currentTime = 0f;
         float startVolume = backgroundMusic.volume;
 
+        // Fade out music
         while (currentTime < fadeTime)
         {
             currentTime += Time.unscaledDeltaTime;
@@ -67,8 +77,7 @@ public class BackgroundMusic : MonoBehaviour
             yield return null;
         }
 
-        backgroundMusic.volume = 0f;
-        backgroundMusic.Stop();
+        backgroundMusic.volume = 0f; // Volume set to 0
+        backgroundMusic.Stop(); // Stop music after fading out
     }
-
 }

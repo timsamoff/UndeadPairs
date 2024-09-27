@@ -10,6 +10,8 @@ public class PauseScreenToggleControls : MonoBehaviour
 
     private LoseHealth loseHealth;
 
+    private BackgroundMusic backgroundMusic;
+
     private void Start()
     {
         loseHealth = FindObjectOfType<LoseHealth>();
@@ -20,13 +22,23 @@ public class PauseScreenToggleControls : MonoBehaviour
             musicToggle.isOn = PlayerPrefs.GetInt("Music_Toggle_State", 1) == 1;
 
             sfxToggle.onValueChanged.AddListener(AudioControl.Instance.OnSfxToggleValueChanged);
-            musicToggle.onValueChanged.AddListener(AudioControl.Instance.OnMusicToggleValueChanged);
+            musicToggle.onValueChanged.AddListener(OnMusicToggleValueChanged); // Call local method instead of AudioControl
         }
 
         if (practiceModeToggle != null)
         {
             practiceModeToggle.isOn = loseHealth.PracticeMode;
             practiceModeToggle.onValueChanged.AddListener(TogglePracticeMode);
+        }
+
+        if (backgroundMusic == null)
+        {
+            backgroundMusic = FindObjectOfType<BackgroundMusic>();
+            if (backgroundMusic == null)
+            {
+                Debug.LogError("BackgroundMusic script not found.");
+                return;
+            }
         }
     }
 
@@ -36,10 +48,32 @@ public class PauseScreenToggleControls : MonoBehaviour
             sfxToggle.onValueChanged.RemoveListener(AudioControl.Instance.OnSfxToggleValueChanged);
 
         if (musicToggle != null)
-            musicToggle.onValueChanged.RemoveListener(AudioControl.Instance.OnMusicToggleValueChanged);
+            musicToggle.onValueChanged.RemoveListener(OnMusicToggleValueChanged);
 
         if (practiceModeToggle != null)
             practiceModeToggle.onValueChanged.RemoveListener(TogglePracticeMode);
+    }
+
+    private void OnMusicToggleValueChanged(bool isOn)
+    {
+        // Save the new toggle state to PlayerPrefs
+        PlayerPrefs.SetInt("Music_Toggle_State", isOn ? 1 : 0);
+
+        if (backgroundMusic != null)
+        {
+            if (isOn)
+            {
+                StartCoroutine(backgroundMusic.FadeInMusic());
+            }
+            else
+            {
+                StartCoroutine(backgroundMusic.FadeOutMusic());
+            }
+        }
+        else
+        {
+            Debug.LogError("BackgroundMusic reference not assigned!");
+        }
     }
 
     public void TogglePracticeMode(bool isOn)
