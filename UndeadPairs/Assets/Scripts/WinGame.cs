@@ -14,9 +14,13 @@ public class WinGame : MonoBehaviour
 
     [SerializeField] private BackgroundMusic backgroundMusic;
 
+    private EndGameAudio endGameAudio;
+
     private void Start()
     {
         pauseScreen = FindObjectOfType<PauseScreen>();
+
+        endGameAudio = GetComponent<EndGameAudio>();
 
         if (uiCanvasGroup != null)
         {
@@ -68,6 +72,9 @@ public class WinGame : MonoBehaviour
         if (matchedCardCount == totalCardCount) // Check if all pairs are matched
         {
             Debug.Log("All cards matched!");
+
+
+
             StartCoroutine(LoadWinScene());
         }
         else
@@ -105,6 +112,16 @@ public class WinGame : MonoBehaviour
             winCanvasGroup.interactable = false;
             winCanvasGroup.blocksRaycasts = false;
             winCanvasGroup.gameObject.SetActive(true);
+        }
+
+        if (endGameAudio != null)
+        {
+            Debug.Log("Playing win audio...");
+            endGameAudio.PlayWinAudio();
+        }
+        else
+        {
+            Debug.LogError("EndGameAudio not assigned.");
         }
 
         StartCoroutine(FadeOutCanvasGroup(uiCanvasGroup));

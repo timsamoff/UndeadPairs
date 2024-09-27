@@ -432,7 +432,15 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 569e7c59d1561914191301689032a710, type: 3}
   - {fileID: 8300000, guid: afcc66e0ce5cd1a4c8c92f220fa2d13d, type: 3}
   - {fileID: 8300000, guid: 7712caef1fe0c3f42ab0dcc19a18c341, type: 3}
-  winGameAudio: []
+  winGameAudio:
+  - {fileID: 8300000, guid: 9205b16bc5403b54fac8acab709348dd, type: 3}
+  - {fileID: 8300000, guid: f4d7da2e693b9824d8cc1ccdf665b84e, type: 3}
+  - {fileID: 8300000, guid: 7ba9556914127074986ff3797b47d1ee, type: 3}
+  - {fileID: 8300000, guid: c4fd97ab17605174ab5cbd00473826f0, type: 3}
+  - {fileID: 8300000, guid: 19bcc37dbd823f94f8acec766559676b, type: 3}
+  - {fileID: 8300000, guid: e5b56a2f03999e541be10e0f5a79f434, type: 3}
+  - {fileID: 8300000, guid: cd3278045acc965428ffe58eeb5e87c9, type: 3}
+  - {fileID: 8300000, guid: ce78f59ddecf9f94998240f320457447, type: 3}
 --- !u!1 &254709412
 GameObject:
   m_ObjectHideFlags: 0

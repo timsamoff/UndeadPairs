@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EndGameAudio : MonoBehaviour
 {
-    [Header("Lose Game Audio Clips")]
+    [Header("Audio Clips")]
     [SerializeField] private AudioClip[] loseGameAudio;
     [SerializeField] private AudioClip[] winGameAudio;
     private AudioSource audioSource;
