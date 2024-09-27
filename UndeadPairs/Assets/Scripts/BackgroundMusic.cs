@@ -39,7 +39,7 @@ public class BackgroundMusic : MonoBehaviour
 
         while (currentTime < fadeTime)
         {
-            currentTime += Time.deltaTime;
+            currentTime += Time.unscaledDeltaTime;
             audioSource.volume = Mathf.Lerp(0f, 1f, currentTime / fadeTime);
             yield return null;
         }
@@ -47,19 +47,28 @@ public class BackgroundMusic : MonoBehaviour
         audioSource.volume = 1f; // Music at full volume when finished fading in
     }
 
+
     public IEnumerator FadeOutMusic()
     {
+        Debug.Log("Fading out music");
+        if (!backgroundMusic.isPlaying)
+        {
+            Debug.LogWarning("AudioSource is already stopped!");
+            yield break;
+        }
+
         float currentTime = 0f;
         float startVolume = backgroundMusic.volume;
 
         while (currentTime < fadeTime)
         {
-            currentTime += Time.deltaTime;
+            currentTime += Time.unscaledDeltaTime;
             backgroundMusic.volume = Mathf.Lerp(startVolume, 0f, currentTime / fadeTime);
             yield return null;
         }
 
-        backgroundMusic.volume = 0f; // Music off when finished fading out
-        backgroundMusic.Stop(); // Stop the music
+        backgroundMusic.volume = 0f;
+        backgroundMusic.Stop();
     }
+
 }

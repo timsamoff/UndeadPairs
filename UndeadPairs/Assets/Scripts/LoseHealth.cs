@@ -100,6 +100,8 @@ public class LoseHealth : MonoBehaviour
             if (!isDead)
             {
                 backgroundImage.color = damageFillColor;
+
+                StartCoroutine(backgroundMusic.FadeOutMusic());
                 StartCoroutine(LoadLoseScene());
             }
         }
@@ -158,7 +160,6 @@ public class LoseHealth : MonoBehaviour
         DisableCardClicks();
         StartCoroutine(FadeOutCanvasGroup(uiCanvasGroup));
         StartCoroutine(FadeInCanvasGroup(loseCanvasGroup));
-        StartCoroutine(backgroundMusic.FadeOutMusic());
     }
 
     private void LoseGame()

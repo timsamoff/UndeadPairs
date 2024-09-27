@@ -49,6 +49,8 @@ public class CardFlip : MonoBehaviour
 
         audioControl = FindObjectOfType<AudioControl>();
 
+        matchedCardCount = 0;
+
         if (cardPlacement == null)
         {
             Debug.LogError("CardPlacement component not found in the parent hierarchy.");
