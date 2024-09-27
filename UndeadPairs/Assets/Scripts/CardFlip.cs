@@ -6,8 +6,8 @@ public class CardFlip : MonoBehaviour
 {
     [Header("Animation Settings")]
     [SerializeField] private Vector2 bounceAmountRange = new Vector2(0.02f, 0.1f);
+    [SerializeField] private Vector2 liftAmountRange = new Vector2(0.45f, 0.55f); // Add random range for lift amount
     [SerializeField] private float bounceSpeed = 0.1f;
-    [SerializeField] private float liftAmount = 0.5f;
     [SerializeField] private float liftSpeed = 0.1f;
     [SerializeField] private float flipSpeed = 0.1f;
     [SerializeField] private float endFunctionalityDelay = 0.5f;
@@ -93,7 +93,6 @@ public class CardFlip : MonoBehaviour
     {
         if (!isAnimating && flippedCards.Count < maxFlippedCards)
         {
-            // Update the original position to the current position
             originalPosition = transform.position;
             FlipCard(!isFlipped);
         }
@@ -166,26 +165,20 @@ public class CardFlip : MonoBehaviour
         float targetZRotation = toFlipped ? (currentZRotation + 180f) % 360f : (currentZRotation - 180f + 360f) % 360f;
         Quaternion targetRotation = Quaternion.Euler(0, 0, targetZRotation);
 
-        // Calculate center of the screen in world space
         Vector3 screenCenter = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, Camera.main.nearClipPlane));
-        screenCenter.y = transform.position.y; // Keep the Y consistent with the card's Y position
+        screenCenter.y = transform.position.y;
 
-        // Calculate direction to center (X-Z plane)
         Vector3 directionToCenter = screenCenter - transform.position;
-        directionToCenter.y = 0;  // Ignore Y-axis for direction
+        directionToCenter.y = 0;
 
-        // Calculate normalized direction
         Vector3 normalizedDirection = directionToCenter.normalized;
-
-        // Define Z-axis nudge (same for all cards)
         Vector3 zNudge = new Vector3(0, 0, Mathf.Sign(normalizedDirection.z) * cardPlacement.NudgeVertAmount);
-
-        // Adjust X movement based on distance
         Vector3 xNudge = new Vector3(normalizedDirection.x * cardPlacement.NudgeHorizAmount, 0, 0);
-
-        // Combine the nudges (X and Z axes)
         Vector3 nudgePosition = transform.position + zNudge + xNudge;
-        nudgePosition.y = transform.position.y + liftAmount;  // Apply vertical lift
+
+        // Randomize the lift amount for each card flip
+        float randomLiftAmount = Random.Range(liftAmountRange.x, liftAmountRange.y);
+        nudgePosition.y = transform.position.y + randomLiftAmount;
 
         // Lift and nudge animation
         float elapsedTime = 0;
@@ -246,7 +239,6 @@ public class CardFlip : MonoBehaviour
 
         yield return new WaitForSeconds(endFunctionalityDelay);
 
-        // Check if all animations are complete
         if (AreAllAnimationsComplete())
         {
             isAllAnimationsComplete = true;
@@ -260,6 +252,7 @@ public class CardFlip : MonoBehaviour
             }
         }
     }
+
     private bool AreAllAnimationsComplete()
     {
         foreach (var card in FindObjectsOfType<CardFlip>())
