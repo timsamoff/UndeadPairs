@@ -350,7 +350,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14ddcd03ea3ac49458e63ef0c98882b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthDecreasePercent: 10
+  healthDecreasePercent: 5
   healthBar: {fileID: 1687003186}
   healthBarFill: {fileID: 477849051}
   defaultFillColor: {r: 1, g: 1, b: 1, a: 0.2}
@@ -2587,8 +2587,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridColumns: 8
   gridRows: 3
-  nudgeHorizAmount: 3
-  nudgeVertAmount: 1.4
+  nudgeHorizAmount: 2
+  nudgeVertAmount: 1
   cardEndHeight: 0.65
   delayRange: {x: 0, y: 1.5}
   bounceAmountRange: {x: 0.5, y: 1}
