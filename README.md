@@ -1,5 +1,5 @@
 
-<img src="https://github.com/timsamoff/UndeadPairs/blob/main/Production/up_icon.png?raw=true" width="250px" alt="Undead Pairs">
+<img src="https://github.com/timsamoff/UndeadPairs/blob/main/Production/up_icon_sm.png?raw=true" width="250px" alt="Undead Pairs">
 
 A game by Tim Samoff, featuring art by [Thomas Thesen](https://www.thomasthesen.art/).
 
