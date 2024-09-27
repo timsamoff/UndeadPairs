@@ -19,6 +19,7 @@ public class LoseHealth : MonoBehaviour
     [SerializeField] private CanvasGroup uiCanvasGroup;
     [SerializeField] private GameObject parentObject;
     [SerializeField] private string loseSceneName = "Lose";
+    [SerializeField] private BackgroundMusic backgroundMusic;
     [SerializeField] private bool practiceMode = false;
 
     private CanvasGroup loseCanvasGroup;
@@ -26,11 +27,13 @@ public class LoseHealth : MonoBehaviour
 
     private PauseScreen pauseScreen;
 
-    [SerializeField] private BackgroundMusic backgroundMusic;
+    private EndGameAudio endGameAudio;
 
     private void Start()
     {
         pauseScreen = FindObjectOfType<PauseScreen>();
+
+        endGameAudio = GetComponent<EndGameAudio>();
 
         practiceMode = false;
 
@@ -107,6 +110,8 @@ public class LoseHealth : MonoBehaviour
                 if (!isDead)
                 {
                     backgroundImage.color = damageFillColor;
+
+                    endGameAudio.PlayLoseAudio();
 
                     StartCoroutine(backgroundMusic.FadeOutMusic());
                     StartCoroutine(LoadLoseScene());

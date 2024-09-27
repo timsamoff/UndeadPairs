@@ -330,6 +330,7 @@ GameObject:
   - component: {fileID: 200711360}
   - component: {fileID: 200711357}
   - component: {fileID: 200711359}
+  - component: {fileID: 200711361}
   m_Layer: 0
   m_Name: GameStateManager
   m_TagString: Untagged
@@ -407,6 +408,31 @@ MonoBehaviour:
   parentObject: {fileID: 1390689479}
   fadeTime: 1.5
   pauseSceneName: Pause
+--- !u!114 &200711361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 200711356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 408d2ad7d0235a74ba6c548e69a558b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loseGameAudio:
+  - {fileID: 8300000, guid: 25a9dd70bbb660f4195fc6aa894312d1, type: 3}
+  - {fileID: 8300000, guid: 146ed06db42cf5541b932de04684b2bc, type: 3}
+  - {fileID: 8300000, guid: e8c51bc71718f9542b2e4f94862da967, type: 3}
+  - {fileID: 8300000, guid: c4d67753e71b0644ab7c0279902b0919, type: 3}
+  - {fileID: 8300000, guid: 78afc6d10e1bf274ea99fb9e9fc8c9c8, type: 3}
+  - {fileID: 8300000, guid: 9a9089abfcd777146a989eaded5a9790, type: 3}
+  - {fileID: 8300000, guid: 59536e61d97aa6c49bf4dc0d52ca73a8, type: 3}
+  - {fileID: 8300000, guid: 7be56d0e2a3307040aa302778bf32eb6, type: 3}
+  - {fileID: 8300000, guid: 569e7c59d1561914191301689032a710, type: 3}
+  - {fileID: 8300000, guid: afcc66e0ce5cd1a4c8c92f220fa2d13d, type: 3}
+  - {fileID: 8300000, guid: 7712caef1fe0c3f42ab0dcc19a18c341, type: 3}
+  winGameAudio: []
 --- !u!1 &254709412
 GameObject:
   m_ObjectHideFlags: 0

@@ -47,7 +47,7 @@ public class MainMenu : MonoBehaviour
 
     public void EasyStart()
     {
-        sceneToLoad = "Easy";
+        sceneToLoad = "Practice";
         DisableButtons();
         StartSceneTransition();
     }
