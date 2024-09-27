@@ -18,6 +18,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Easy.unity
     guid: 6b916102d41bea74b831e1dddc3fbdaf
   - enabled: 1
+    path: Assets/Scenes/Normal.unity
+    guid: faa0b59aee0ebc44aa60946921e4f730
+  - enabled: 1
+    path: Assets/Scenes/Difficult.unity
+    guid: abd5c6efe4e0b3947af72dbc5021d788
+  - enabled: 1
     path: Assets/Scenes/Pause.unity
     guid: e267fec6b8f7281438cda4c6a27cd06b
   - enabled: 1
