@@ -6,11 +6,14 @@ public class CardFlip : MonoBehaviour
 {
     [Header("Animation Settings")]
     [SerializeField] private Vector2 bounceAmountRange = new Vector2(0.02f, 0.1f);
-    [SerializeField] private Vector2 liftAmountRange = new Vector2(0.45f, 0.55f); // Add random range for lift amount
+    [SerializeField] private Vector2 liftAmountRange = new Vector2(0.45f, 0.55f);
     [SerializeField] private float bounceSpeed = 0.1f;
     [SerializeField] private float liftSpeed = 0.1f;
     [SerializeField] private float flipSpeed = 0.1f;
     [SerializeField] private float endFunctionalityDelay = 0.5f;
+
+    [Header("Screen Settings")]
+    [SerializeField] private float screenCenterOffset = 120f; // Offset for center calculation
 
     private static bool isAllAnimationsComplete = true;
 
@@ -34,21 +37,15 @@ public class CardFlip : MonoBehaviour
     private static int matchedCardCount = 0;
 
     private CardPlacement cardPlacement;
-
     private MakeSplat makeSplat;
-
     private LoseHealth loseHealth;
-
     private AudioControl audioControl;
 
     private void Start()
     {
         makeSplat = FindObjectOfType<MakeSplat>();
-
         cardPlacement = GetComponentInParent<CardPlacement>();
-
         audioControl = FindObjectOfType<AudioControl>();
-
         matchedCardCount = 0;
 
         if (cardPlacement == null)
@@ -58,7 +55,7 @@ public class CardFlip : MonoBehaviour
         }
 
         originalRotation = transform.rotation;
-        screenCenter = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, Camera.main.nearClipPlane));
+        CalculateScreenCenter(); // Adjust screen center calculation
         CalculateGridPosition();
 
         audioSource = GetComponent<AudioSource>();
@@ -68,13 +65,18 @@ public class CardFlip : MonoBehaviour
         }
 
         loseHealth = FindObjectOfType<LoseHealth>();
-
         if (loseHealth == null)
         {
             Debug.LogError("LoseHealth component not found.");
         }
 
         totalCardCount = FindObjectsOfType<CardFlip>().Length;
+    }
+
+    private void CalculateScreenCenter()
+    {
+        // Use the screenCenterOffset when calculating the screen center
+        screenCenter = Camera.main.ScreenToWorldPoint(new Vector3((Screen.width / 2) + screenCenterOffset, Screen.height / 2, Camera.main.nearClipPlane));
     }
 
     private void CalculateGridPosition()
@@ -151,7 +153,7 @@ public class CardFlip : MonoBehaviour
 
     private IEnumerator FlipAnimation(bool toFlipped)
     {
-        isAllAnimationsComplete = false;  // Mark animations as incomplete
+        isAllAnimationsComplete = false;
         isAnimating = true;
 
         if (cardFlip.Length > 0 && !audioControl.IsSfxMuted())
@@ -165,12 +167,10 @@ public class CardFlip : MonoBehaviour
         float targetZRotation = toFlipped ? (currentZRotation + 180f) % 360f : (currentZRotation - 180f + 360f) % 360f;
         Quaternion targetRotation = Quaternion.Euler(0, 0, targetZRotation);
 
-        Vector3 screenCenter = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, Camera.main.nearClipPlane));
-        screenCenter.y = transform.position.y;
-
         Vector3 directionToCenter = screenCenter - transform.position;
         directionToCenter.y = 0;
 
+        // Calculate nudging based on gridColumns and gridRows
         Vector3 normalizedDirection = directionToCenter.normalized;
         Vector3 zNudge = new Vector3(0, 0, Mathf.Sign(normalizedDirection.z) * cardPlacement.NudgeVertAmount);
         Vector3 xNudge = new Vector3(normalizedDirection.x * cardPlacement.NudgeHorizAmount, 0, 0);
