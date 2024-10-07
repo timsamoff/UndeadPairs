@@ -3,13 +3,6 @@ using System.Collections;
 
 public class CardPlacement : MonoBehaviour
 {
-    [Header("Nudge Settings")]
-    [SerializeField] private float nudgeHorizAmount = 2f;
-    [SerializeField] private float nudgeVertAmount = 2f;
-
-    public float NudgeHorizAmount => nudgeHorizAmount;
-    public float NudgeVertAmount => nudgeVertAmount;
-
     [Header("Card Settings")]
     [SerializeField] private float cardEndHeight = 0.6f;
     public float CardEndHeight => cardEndHeight;
@@ -18,18 +11,25 @@ public class CardPlacement : MonoBehaviour
     [SerializeField] private Vector2 delayRange = new Vector2(0f, 2f); // Range for random delay before falling
     [SerializeField] private Vector2 bounceAmountRange = new Vector2(0.02f, 0.1f); // Range for how high the object bounces
     [SerializeField] private float fallSpeed = 1.0f;
-
-    [Header("Bounce Settings")]
-    [Tooltip("Higher value = quicker bounce")]
-    [SerializeField] private float bounceSpeed = 0.1f; // Speed of the bounce
-
-    // Rotation amount range for both X and Z axes (in degrees)
     [SerializeField] private Vector2 rotationRange = new Vector2(0f, 1f);
 
     [Header("For Bounce Testing")]
     // Checkboxes to enable/disable X and Z axis rotation
     [SerializeField] private bool enableXRotation = true;
     [SerializeField] private bool enableZRotation = true;
+
+    [Header("Bounce Settings")]
+    [Tooltip("Higher value = quicker bounce")]
+    [SerializeField] private float bounceSpeed = 0.1f; // Speed of the bounce
+
+    [Header("Nudge Settings")]
+    [SerializeField] private float verticalCenterOffset = -200f; // Offset to allow for HUD
+    [SerializeField] private float nudgeHorizAmount = 2f;
+    [SerializeField] private float nudgeVertAmount = 2f;
+
+    public float VerticalCenterOffset => verticalCenterOffset;
+    public float NudgeHorizAmount => nudgeHorizAmount;
+    public float NudgeVertAmount => nudgeVertAmount;
 
     [Header("Sound Settings")]
     [SerializeField] private AudioClip[] cardThrow;

@@ -2164,18 +2164,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed56f2706aca0894ebd54a54f864bb1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridColumns: 5
-  gridRows: 3
-  nudgeHorizAmount: 3
-  nudgeVertAmount: 1.4
   cardEndHeight: 0.65
   delayRange: {x: 0, y: 1.5}
   bounceAmountRange: {x: 0.5, y: 1}
   fallSpeed: 0.8
-  bounceSpeed: 0.05
   rotationRange: {x: 1, y: 10}
   enableXRotation: 1
   enableZRotation: 1
+  bounceSpeed: 0.05
+  verticalCenterOffset: -200
+  nudgeHorizAmount: 0.15
+  nudgeVertAmount: 0.15
   cardThrow:
   - {fileID: 8300000, guid: ff6ccd42bb9732249950895709518e25, type: 3}
   - {fileID: 8300000, guid: 05fd536b92db14b4dae1da6eaa433dfe, type: 3}

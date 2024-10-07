@@ -1678,8 +1678,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed56f2706aca0894ebd54a54f864bb1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridColumns: 4
-  gridRows: 2
   nudgeHorizAmount: 3
   nudgeVertAmount: 1.4
   cardEndHeight: 0.65

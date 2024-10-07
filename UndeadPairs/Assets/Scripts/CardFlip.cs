@@ -12,9 +12,6 @@ public class CardFlip : MonoBehaviour
     [SerializeField] private float flipSpeed = 0.1f;
     [SerializeField] private float endFunctionalityDelay = 0.5f;
 
-    [Header("Grid Settings")]
-    [SerializeField] private float verticalCenterOffset = 120f; // New variable to adjust vertical center in pixels
-
     private static bool isAllAnimationsComplete = true;
 
     [Header("Sound Settings")]
@@ -82,7 +79,7 @@ public class CardFlip : MonoBehaviour
     private Vector3 CalculateScreenCenter()
     {
         // Apply the verticalCenterOffset
-        return Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2, (Screen.height / 2) + verticalCenterOffset, Camera.main.nearClipPlane));
+        return Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2, (Screen.height / 2) + cardPlacement.VerticalCenterOffset, Camera.main.nearClipPlane));
     }
 
     private void OnMouseUpAsButton()
@@ -152,6 +149,7 @@ public class CardFlip : MonoBehaviour
         isAllAnimationsComplete = false;  // Mark animations as incomplete
         isAnimating = true;
 
+        // Play audio if not muted
         if (cardFlip.Length > 0 && !audioControl.IsSfxMuted())
         {
             AudioClip randomCardFlip = cardFlip[Random.Range(0, cardFlip.Length)];
@@ -163,30 +161,22 @@ public class CardFlip : MonoBehaviour
         float targetZRotation = toFlipped ? (currentZRotation + 180f) % 360f : (currentZRotation - 180f + 360f) % 360f;
         Quaternion targetRotation = Quaternion.Euler(0, 0, targetZRotation);
 
-        // Access CardPlacement values for nudge
-        float nudgeHoriz = cardPlacement.NudgeHorizAmount;
-        float nudgeVert = cardPlacement.NudgeVertAmount;
-
         // Calculate center of the screen in world space
         Vector3 screenCenter = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, Camera.main.nearClipPlane));
         screenCenter.y = transform.position.y; // Keep the Y consistent with the card's Y position
 
-        // Calculate direction to center (X-Z plane)
-        Vector3 directionToCenter = screenCenter - transform.position;
-        directionToCenter.y = 0;  // Ignore Y-axis for direction
+        // Calculate the direction vector from the card to the screen center
+        Vector3 directionToCenter = (screenCenter - transform.position).normalized;  // Normalize to get the direction
+        float distanceToCenter = Vector3.Distance(screenCenter, transform.position);
 
-        // Calculate normalized direction
-        Vector3 normalizedDirection = directionToCenter.normalized;
+        // Calculate the nudge amount (you can adjust the multiplier)
+        float nudgeAmount = cardPlacement.NudgeHorizAmount; // Ensure this is positive
 
-        // Define Z-axis nudge using nudgeVertAmount
-        Vector3 zNudge = new Vector3(0, 0, Mathf.Sign(normalizedDirection.z) * nudgeVert);
+        // Create nudge vector
+        Vector3 nudgePosition = transform.position + directionToCenter * nudgeAmount;
 
-        // Adjust X movement based on distance and nudgeHorizAmount
-        Vector3 xNudge = new Vector3(normalizedDirection.x * nudgeHoriz, 0, 0);
-
-        // Combine the nudges (X and Z axes)
-        Vector3 nudgePosition = transform.position + zNudge + xNudge;
-        nudgePosition.y = transform.position.y + liftAmount;  // Apply vertical lift
+        // Lift position
+        nudgePosition.y = transform.position.y + cardPlacement.NudgeVertAmount;
 
         // Lift and nudge animation
         float elapsedTime = 0;
