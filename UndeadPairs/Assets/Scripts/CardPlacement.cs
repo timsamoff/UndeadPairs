@@ -3,14 +3,10 @@ using System.Collections;
 
 public class CardPlacement : MonoBehaviour
 {
-    [Header("Grid Settings")]
-    [SerializeField] private int gridColumns = 3;
-    [SerializeField] private int gridRows = 2;
+    [Header("Nudge Settings")]
     [SerializeField] private float nudgeHorizAmount = 2f;
     [SerializeField] private float nudgeVertAmount = 2f;
 
-    public int GridColumns => gridColumns;
-    public int GridRows => gridRows;
     public float NudgeHorizAmount => nudgeHorizAmount;
     public float NudgeVertAmount => nudgeVertAmount;
 

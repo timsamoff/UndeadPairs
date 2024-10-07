@@ -241,6 +241,7 @@ MonoBehaviour:
   liftSpeed: 0.1
   flipSpeed: 1
   endFunctionalityDelay: 1
+  verticalCenterOffset: -200
   zombieGroan:
   - {fileID: 8300000, guid: 75bc2ed41f2452346a3cc1574b2ed2ce, type: 3}
   - {fileID: 8300000, guid: 449c1f6813fdcac4b82e3eb2cb589c16, type: 3}
@@ -294,6 +295,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 00cd00821ea2b2c488fb3dc72bf64454, type: 3}
   - {fileID: 8300000, guid: b8b19034f666ed4428a45bade2c87fd8, type: 3}
   - {fileID: 8300000, guid: f21eafd578b6fd24cbeedf6da439be77, type: 3}
+  testCubePrefab: {fileID: 3558551089423885820, guid: 42e7d087a1119e2478ad33d7c9f477c6,
+    type: 3}
 --- !u!82 &151565447084151595
 AudioSource:
   m_ObjectHideFlags: 0
