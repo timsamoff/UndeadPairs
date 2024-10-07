@@ -68,7 +68,7 @@ public class CardPlacement : MonoBehaviour
         float cardStartHeight = originalPosition.y;
 
         // Where cards will start falling from
-        Vector3 startPosition = new Vector3(originalPosition.x, cardStartHeight, originalPosition.z); // 10f is an example offset
+        Vector3 startPosition = new Vector3(originalPosition.x, cardStartHeight, originalPosition.z);
         prefabParent.position = startPosition;
 
         // Random delay before cards start falling

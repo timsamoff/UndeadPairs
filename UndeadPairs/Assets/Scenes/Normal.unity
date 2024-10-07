@@ -2173,8 +2173,8 @@ MonoBehaviour:
   enableZRotation: 1
   bounceSpeed: 0.05
   verticalCenterOffset: -200
-  nudgeHorizAmount: 0.15
-  nudgeVertAmount: 0.15
+  nudgeHorizAmount: 2
+  nudgeVertAmount: 1
   cardThrow:
   - {fileID: 8300000, guid: ff6ccd42bb9732249950895709518e25, type: 3}
   - {fileID: 8300000, guid: 05fd536b92db14b4dae1da6eaa433dfe, type: 3}

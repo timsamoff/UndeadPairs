@@ -53,7 +53,7 @@ public class CardFlip : MonoBehaviour
 
         if (cardPlacement == null)
         {
-            Debug.LogError("CardPlacement component not found in the parent hierarchy.");
+            Debug.LogError("CardPlacement component not found.");
             return;
         }
 
@@ -169,8 +169,8 @@ public class CardFlip : MonoBehaviour
         Vector3 directionToCenter = (screenCenter - transform.position).normalized;  // Normalize to get the direction
         float distanceToCenter = Vector3.Distance(screenCenter, transform.position);
 
-        // Calculate the nudge amount (you can adjust the multiplier)
-        float nudgeAmount = cardPlacement.NudgeHorizAmount; // Ensure this is positive
+        // Calculate the nudge amount
+        float nudgeAmount = cardPlacement.NudgeHorizAmount;
 
         // Create nudge vector
         Vector3 nudgePosition = transform.position + directionToCenter * nudgeAmount;
