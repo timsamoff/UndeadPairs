@@ -7,7 +7,7 @@ public class CardFlip : MonoBehaviour
     [Header("Animation Settings")]
     [SerializeField] private Vector2 bounceAmountRange = new Vector2(0.02f, 0.1f);
     [SerializeField] private float bounceSpeed = 0.1f;
-    [SerializeField] private float liftAmount = 0.5f;
+    // [SerializeField] private float liftAmount = 0.5f;
     [SerializeField] private float liftSpeed = 0.1f;
     [SerializeField] private float flipSpeed = 0.1f;
     [SerializeField] private float endFunctionalityDelay = 0.5f;
