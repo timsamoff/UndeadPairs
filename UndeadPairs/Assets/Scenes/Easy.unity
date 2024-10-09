@@ -1535,9 +1535,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ccc1842724a1a74386f003781a74822, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultCursorTexture: {fileID: 2800000, guid: 5504b1fe67a306a4a87b3a58abd2547a,
+  lowResDefaultCursorTexture: {fileID: 2800000, guid: 068354020463a8949bf25c2fc5807973,
     type: 3}
-  cursorTexture: {fileID: 2800000, guid: 909b33e41a30f054daabcc64d42a4809, type: 3}
+  midResDefaultCursorTexture: {fileID: 2800000, guid: 8b7d8f4e071e59e4ea3bdfa1163ac92c,
+    type: 3}
+  highResDefaultCursorTexture: {fileID: 2800000, guid: 218f599608ddeb54481e44b90274bccb,
+    type: 3}
+  lowResCursorTexture: {fileID: 2800000, guid: f1f524104c61b564fb52e96ba15ebbd0, type: 3}
+  midResCursorTexture: {fileID: 2800000, guid: 074851e7c8da45b4daca776e7090ffb9, type: 3}
+  highResCursorTexture: {fileID: 2800000, guid: 5a3da831b4710d546bd2e263d176bdd7,
+    type: 3}
   clickableLayer:
     serializedVersion: 2
     m_Bits: 96
@@ -1762,18 +1769,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed56f2706aca0894ebd54a54f864bb1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridColumns: 5
-  gridRows: 2
-  nudgeHorizAmount: 3
-  nudgeVertAmount: 1.4
   cardEndHeight: 0.65
   delayRange: {x: 0, y: 1.5}
   bounceAmountRange: {x: 0.5, y: 1}
   fallSpeed: 0.8
-  bounceSpeed: 0.05
   rotationRange: {x: 1, y: 10}
   enableXRotation: 1
   enableZRotation: 1
+  bounceSpeed: 0.05
+  verticalCenterOffset: -200
+  nudgeHorizAmount: 3
+  nudgeVertAmount: 1.4
   cardThrow:
   - {fileID: 8300000, guid: ff6ccd42bb9732249950895709518e25, type: 3}
   - {fileID: 8300000, guid: 05fd536b92db14b4dae1da6eaa433dfe, type: 3}
