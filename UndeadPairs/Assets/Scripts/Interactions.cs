@@ -26,7 +26,8 @@ public class Interactions : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("SFX_Toggle_State", 1) == 1 && soundOn)
         {
-            audioSource.PlayOneShot(click, 0.6f);
+            // audioSource.PlayOneShot(click, 0.6f);
+            AudioSource.PlayClipAtPoint(click, Camera.main.transform.position, 0.6f);
         }
     }
 
@@ -34,7 +35,8 @@ public class Interactions : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("SFX_Toggle_State", 1) == 1 && soundOn)
         {
-            audioSource.PlayOneShot(hover, 0.6f);
+            // audioSource.PlayOneShot(hover, 0.6f);
+            AudioSource.PlayClipAtPoint(hover, Camera.main.transform.position, 0.6f);
         }
     }
 }
