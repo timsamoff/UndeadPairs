@@ -13,12 +13,8 @@ public class MainMenu : MonoBehaviour
 
     [SerializeField] private BackgroundMusic backgroundMusic;
 
-    private Interactions interactionsScript;
-
     void Start()
     {
-        interactionsScript = GetComponent<Interactions>();
-
         fadeToBlack.onFadeComplete += LoadScene;
 
         if (!gameLaunched)
@@ -92,8 +88,6 @@ public class MainMenu : MonoBehaviour
         {
             button.interactable = false;
         }
-
-        interactionsScript.SoundOn(false);
     }
 
     private void LoadScene()
