@@ -12,13 +12,24 @@ public class CardFlip : MonoBehaviour
     [SerializeField] private float flipSpeed = 0.1f;
     [SerializeField] private float endFunctionalityDelay = 0.5f;
 
-    private static bool isAllAnimationsComplete = true;
+    // public enum Waveform { Sine, Square, Triangle }
+
+    [Header("Camera Shake Settings")]
+    // [SerializeField] private Waveform selectedWaveform;
+    [SerializeField] private float shakeXAxis = 0.5f; // X axis
+    [SerializeField] private float shakeZAxis = 0.5f; // Z axis
+    [SerializeField] private float shakeDuration = 0.25f; // Duration
+    [SerializeField] private float shakeFrquency = 2.0f; // Frequency
+    [SerializeField] private bool shakeSampleAndHold = false; // Sample-and-hold?
+    [SerializeField] private float shakeSAHInterval = 0.1f; // Sample-hold interval
 
     [Header("Sound Settings")]
     [SerializeField] private AudioClip[] zombieGroan;
     [SerializeField] private AudioClip[] cardFlip;
     [SerializeField] private AudioClip[] gunBlast;
     private AudioSource audioSource;
+
+    private static bool areAllAnimationsComplete = true;
 
     private bool isFlipped = false;
     private Quaternion originalRotation;
@@ -146,7 +157,7 @@ public class CardFlip : MonoBehaviour
 
     private IEnumerator FlipAnimation(bool toFlipped)
     {
-        isAllAnimationsComplete = false;  // Mark animations as incomplete
+        areAllAnimationsComplete = false;  // Mark animations as incomplete
         isAnimating = true;
 
         // Play audio if not muted
@@ -240,12 +251,12 @@ public class CardFlip : MonoBehaviour
         // Check if all animations are complete
         if (AreAllAnimationsComplete())
         {
-            isAllAnimationsComplete = true;
+            areAllAnimationsComplete = true;
         }
 
         if (toFlipped)
         {
-            if (flippedCards.Count == maxFlippedCards && isAllAnimationsComplete)
+            if (flippedCards.Count == maxFlippedCards && areAllAnimationsComplete)
             {
                 StartCoroutine(CheckForMatch());
             }
@@ -267,7 +278,7 @@ public class CardFlip : MonoBehaviour
     private IEnumerator CheckForMatch()
     {
         // Wait until all animations are complete
-        while (!isAllAnimationsComplete)
+        while (!areAllAnimationsComplete)
         {
             yield return null;
         }
@@ -307,6 +318,16 @@ public class CardFlip : MonoBehaviour
                 makeSplat.SpawnSplat(card1.transform.position);
                 makeSplat.SpawnSplat(card2.transform.position);
             }
+
+            CameraShake cameraShake = FindObjectOfType<CameraShake>();
+            cameraShake.TriggerShake(
+                CameraShake.Waveform.Square,
+                shakeXAxis,
+                shakeZAxis,
+                shakeDuration,
+                shakeFrquency,
+                shakeSampleAndHold,
+                shakeSAHInterval);
 
             Destroy(card1.gameObject);
             Destroy(card2.gameObject);

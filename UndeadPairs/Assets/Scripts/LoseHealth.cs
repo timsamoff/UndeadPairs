@@ -98,6 +98,9 @@ public class LoseHealth : MonoBehaviour
             {
                 healthBar.value = currentHealth / 100f;
 
+                CameraShake cameraShake = FindObjectOfType<CameraShake>();
+                cameraShake.TriggerShake();
+
                 StartCoroutine(FlashRed());
             }
 
@@ -120,6 +123,9 @@ public class LoseHealth : MonoBehaviour
         }
         else
         {
+            CameraShake cameraShake = FindObjectOfType<CameraShake>();
+            cameraShake.TriggerShake();
+
             // Just flash red when in Practice Mode
             StartCoroutine(FlashRed());
         }
