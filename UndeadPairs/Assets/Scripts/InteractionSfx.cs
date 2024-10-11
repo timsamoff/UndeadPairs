@@ -6,6 +6,7 @@ public class InteractionSfx : MonoBehaviour
 {
     [SerializeField] private AudioClip hover;
     [SerializeField] private AudioClip click;
+    [SerializeField] private float interactionVolume = 1f;
     private AudioSource audioSource;
 
     private bool soundOn = true;
@@ -16,7 +17,12 @@ public class InteractionSfx : MonoBehaviour
 
     private void Start()
     {
-        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
+
+        if (PlayerPrefs.GetInt("SFX_Toggle_State", 1) == 1)
+        {
+            soundOn = true;
+        }
     }
 
     private void Update()
@@ -45,34 +51,45 @@ public class InteractionSfx : MonoBehaviour
         List<RaycastResult> results = new List<RaycastResult>();
         EventSystem.current.RaycastAll(pointerData, results);
 
-        // Hit the UI?
-        if (results.Count > 0)
+        // Iterate through the raycast results to find the highest relevant UI element
+        GameObject targetElement = null;
+        foreach (var result in results)
         {
-            GameObject hoveredElement = results[0].gameObject;
+            GameObject potentialElement = GetRelevantUIElement(result.gameObject);
+            if (potentialElement != null)
+            {
+                targetElement = potentialElement;
+                break;  // Stop at the first relevant UI element
+            }
+        }
 
-            // Traverse up the hierarchy to find the button or toggle (checking tags)
-            GameObject targetElement = GetRelevantUIElement(hoveredElement);
-
-            if (targetElement != null && targetElement != lastHoveredElement)
+        if (targetElement != null)
+        {
+            // Hovering over a new element
+            if (targetElement != lastHoveredElement)
             {
                 PlayHoverSound();
                 lastHoveredElement = targetElement;
             }
 
-            // Handle Clicks for both Button and Toggle
-            if (targetElement != null && Input.GetMouseButtonDown(0))
+            // Handle Clicks for both button and toggle
+            if (Input.GetMouseButtonDown(0))
             {
                 PlayClickSound();
             }
         }
         else
         {
-            // Reset last hovered element
-            lastHoveredElement = null;
+            // Reset last hovered element when moving away from UI
+            if (lastHoveredElement != null)
+            {
+                lastHoveredElement = null;
+            }
         }
     }
 
-    // Traverse the hierarchy to find a parent with the correct tag
+
+    // Look through hierarchy to find a parent with the correct tag
     private GameObject GetRelevantUIElement(GameObject hoveredElement)
     {
         Transform currentTransform = hoveredElement.transform;
@@ -95,7 +112,7 @@ public class InteractionSfx : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("SFX_Toggle_State", 1) == 1 && soundOn)
         {
-            audioSource.PlayOneShot(hover);
+            audioSource.PlayOneShot(hover, interactionVolume);
         }
     }
 
@@ -103,7 +120,7 @@ public class InteractionSfx : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("SFX_Toggle_State", 1) == 1 && soundOn)
         {
-            audioSource.PlayOneShot(click);
+            audioSource.PlayOneShot(click, interactionVolume);
         }
     }
 }
