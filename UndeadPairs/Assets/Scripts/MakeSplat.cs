@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class MakeSplat : MonoBehaviour
 {
-    public GameObject splatPrefab;
-    public Material[] splatMaterials;
+    [SerializeField] private GameObject splatPrefab;
+    [SerializeField] private Material[] splatMaterials;
 
     private List<Material> materialPool;
 
@@ -21,8 +21,11 @@ public class MakeSplat : MonoBehaviour
     public void SpawnSplat(Vector3 position)
     {
         Quaternion correctRotation = Quaternion.Euler(0, 180, 0);
-
         GameObject splat = Instantiate(splatPrefab, position, correctRotation);
+
+        Vector3 newPosition = splat.transform.position;
+        newPosition.y = 0.5f;
+        splat.transform.position = newPosition;
 
         Renderer renderer = splat.GetComponent<Renderer>();
 
