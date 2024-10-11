@@ -18,7 +18,6 @@ public class MakeSplat : MonoBehaviour
         materialPool = new List<Material>(splatMaterials);
     }
 
-    // Function to spawn splats at a specific positions with random materials
     public void SpawnSplat(Vector3 position)
     {
         Quaternion correctRotation = Quaternion.Euler(0, 180, 0);

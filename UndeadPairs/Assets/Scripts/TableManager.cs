@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TableManager : MonoBehaviour
+public class TableMaterialAssigner : MonoBehaviour
 {
     [SerializeField] private Material[] materials;
 
@@ -21,33 +21,36 @@ public class TableManager : MonoBehaviour
             Debug.LogWarning("No materials assigned to the array.");
         }
 
-        // Stretch plane proportionately to fit screen
-        StretchPlaneProportionately();
+        // Stretch the plane proportionately to fit the screen
+        StretchPlaneToFitScreen();
     }
 
-    private void StretchPlaneProportionately()
+    private void StretchPlaneToFitScreen()
     {
         Camera mainCamera = Camera.main;
 
         // Get the screen aspect ratio
         float screenAspect = (float)Screen.width / (float)Screen.height;
 
-        Vector3 initialScale = transform.localScale;
-        float originalWidth = 6f;  // Original X scale (width)
-        float originalHeight = 3.5f; // Original Z scale (height)
+        // Define the original size of the plane
+        float planeOriginalWidth = 6.0f;   // X-axis (original width)
+        float planeOriginalHeight = 3.5f;  // Z-axis (original height)
 
-        float screenWorldHeight = originalHeight; // Keep your original height
-        float screenWorldWidth = screenWorldHeight * screenAspect; // Adjust width proportionally to aspect ratio
+        // Calculate the distance from the camera to the plane
+        float distance = Mathf.Abs(mainCamera.transform.position.y - transform.position.y);
 
-        float widthScaleFactor = screenWorldWidth / originalWidth;  // Scale factor for X axis (width)
-        float heightScaleFactor = screenWorldHeight / originalHeight; // Scale factor for Z axis (height)
+        float screenWorldHeight = 2f * distance * Mathf.Tan(mainCamera.fieldOfView * 0.5f * Mathf.Deg2Rad);
+        float screenWorldWidth = screenWorldHeight * screenAspect;
 
-        float uniformScaleFactor = Mathf.Min(widthScaleFactor, heightScaleFactor);
+        float widthScaleFactor = screenWorldWidth / planeOriginalWidth;
+        float heightScaleFactor = screenWorldHeight / planeOriginalHeight;
+
+        float scaleFactor = Mathf.Min(widthScaleFactor, heightScaleFactor, 1f);
 
         transform.localScale = new Vector3(
-            initialScale.x * uniformScaleFactor, // Scale the width (X-axis)
-            initialScale.y,                      // Keep the Y scale (depth) unchanged
-            initialScale.z * uniformScaleFactor  // Scale the height (Z-axis)
+            planeOriginalWidth * scaleFactor,
+            transform.localScale.y,
+            planeOriginalHeight * scaleFactor
         );
     }
 }
