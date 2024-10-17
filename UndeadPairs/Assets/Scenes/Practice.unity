@@ -2816,8 +2816,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d9977d64fcdcba46a0876e612c270d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hover: {fileID: 8300000, guid: a8646f1b69c94804584a67d476328e2f, type: 3}
-  click: {fileID: 8300000, guid: 2157f1b8cfab6ff418e00c7240af24c0, type: 3}
+  hover: {fileID: 8300000, guid: b4549fd6db6b73044bcdf29da567b781, type: 3}
+  click: {fileID: 8300000, guid: b7f39456a16e06749b3b5b48a93a3a20, type: 3}
   interactionVolume: 0.2
 --- !u!1001 &2026317795
 PrefabInstance:

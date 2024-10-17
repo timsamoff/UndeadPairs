@@ -113,6 +113,7 @@ public class InteractionSfx : MonoBehaviour
         if (PlayerPrefs.GetInt("SFX_Toggle_State", 1) == 1 && soundOn)
         {
             audioSource.PlayOneShot(hover, interactionVolume);
+            Debug.Log("Playing hover sound.");
         }
     }
 
@@ -121,6 +122,7 @@ public class InteractionSfx : MonoBehaviour
         if (PlayerPrefs.GetInt("SFX_Toggle_State", 1) == 1 && soundOn)
         {
             audioSource.PlayOneShot(click, interactionVolume);
+            Debug.Log("Playing click sound.");
         }
     }
 }
