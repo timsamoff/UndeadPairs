@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 54716043}
   - component: {fileID: 54716042}
   m_Layer: 5
-  m_Name: Practice Mode
+  m_Name: Immortality Mode
   m_TagString: UIToggle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -159,7 +159,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -30, y: -130}
+  m_AnchoredPosition: {x: -58, y: -130}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &54716042
@@ -2470,7 +2470,7 @@ GameObject:
   - component: {fileID: 2075096605}
   - component: {fileID: 2075096604}
   m_Layer: 5
-  m_Name: Practice Mode On/Off
+  m_Name: Immortality Mode On/Off
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2528,7 +2528,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Practice Mode
+  m_Text: Immortality Mode
 --- !u!222 &2075096605
 CanvasRenderer:
   m_ObjectHideFlags: 0

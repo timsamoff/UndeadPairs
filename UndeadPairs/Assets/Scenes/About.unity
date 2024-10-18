@@ -1362,7 +1362,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Click pause to change audio settings or turn on "practice mode."
+  m_text: Click pause to change audio settings or turn on "Immortality Mode."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 55c64327892edbe43a1e28c61431770f, type: 2}
   m_sharedMaterial: {fileID: 1367333407339114717, guid: 55c64327892edbe43a1e28c61431770f,
