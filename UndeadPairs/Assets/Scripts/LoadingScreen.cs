@@ -14,6 +14,11 @@ public class LoadingScreen : MonoBehaviour
 
     void Start()
     {
+
+        // Limit framerate to 30fps.
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = 30;
+
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
