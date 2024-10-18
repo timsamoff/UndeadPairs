@@ -1107,7 +1107,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Game by Tim Samoff / Art by Thomas Thesen
+  m_text: 'Game by Tim Samoff / Art by Thomas Paul Thesen
 
     Contact: samoff@gmail.com'
   m_isRightToLeft: 0

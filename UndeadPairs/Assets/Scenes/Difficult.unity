@@ -232,7 +232,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14ddcd03ea3ac49458e63ef0c98882b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthDecreasePercent: 5
+  healthDecreasePercent: 10
   healthBar: {fileID: 1687003186}
   healthBarFill: {fileID: 477849051}
   defaultFillColor: {r: 1, g: 1, b: 1, a: 0.2}
@@ -1606,8 +1606,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultWaveform: 1
-  defaultXShakeAmount: 0.5
-  defaultZShakeAmount: 0.5
+  defaultXShakeAmount: 0.3
+  defaultZShakeAmount: 0.3
   defaultShakeDuration: 0.5
   defaultShakeFrequency: 10
   defaultUseSampleAndHold: 1
@@ -2794,7 +2794,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 6, y: 1, z: 3.5}
+  m_LocalScale: {x: 7, y: 1, z: 4.08}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -2817,6 +2817,11 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 2f36eafa82a907a45b341d125d34c8c3, type: 2}
   - {fileID: 2100000, guid: de66a95c0da230c47be8ea2ca0e556e0, type: 2}
   - {fileID: 2100000, guid: a51bb9b545b91a642a43ac24c2a55e6f, type: 2}
+  - {fileID: 2100000, guid: c09868c901c3bf94482be239829e39da, type: 2}
+  - {fileID: 2100000, guid: 3ef985655fcf1d14ab5fc364f6d83999, type: 2}
+  - {fileID: 2100000, guid: 2a9807b69ad71694a81ea2feb6118481, type: 2}
+  - {fileID: 2100000, guid: 9d1e521806deaf14791572683ab48e32, type: 2}
+  - {fileID: 2100000, guid: 9a2e3b8318665174daefa9300a3432a2, type: 2}
 --- !u!1 &1481443589
 GameObject:
   m_ObjectHideFlags: 0
