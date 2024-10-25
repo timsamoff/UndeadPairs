@@ -17,6 +17,8 @@ public class MainMenu : MonoBehaviour
 
     void Start()
     {
+        PlayerPrefs.DeleteKey("PlayerHealth");
+
         interactionSfx = GetComponent<InteractionSfx>();
 
         fadeToBlack.onFadeComplete += LoadScene;

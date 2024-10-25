@@ -16,6 +16,11 @@ public class WinGame : MonoBehaviour
 
     private EndGameAudio endGameAudio;
 
+    [SerializeField] private float pauseBeforeLoad = 2.0f;
+    [SerializeField] private bool marathonMode = false;
+
+    public bool MarathonMode => marathonMode;
+
     private void Start()
     {
         pauseScreen = FindObjectOfType<PauseScreen>();
@@ -69,19 +74,37 @@ public class WinGame : MonoBehaviour
         Debug.Log("Matched Card Count: " + matchedCardCount);
         Debug.Log("Total Card Count: " + totalCardCount);
 
-        if (matchedCardCount == totalCardCount) // Check if all pairs are matched
+        if (marathonMode)
         {
-            Debug.Log("All cards matched!");
-
-
-
-            StartCoroutine(LoadWinScene());
+            StartCoroutine(ReloadSceneWithDelay());
         }
         else
         {
-            Debug.Log("Not all cards matched yet.");
+            if (matchedCardCount == totalCardCount) // Check if all pairs are matched
+            {
+                Debug.Log("All cards matched!");
+
+
+
+                StartCoroutine(LoadWinScene());
+            }
+            /*else
+            {
+                Debug.Log("Not all cards matched yet.");
+            }*/
         }
     }
+
+    private IEnumerator ReloadSceneWithDelay()
+    {
+        // Save current health before reloading
+        PlayerPrefs.SetFloat("PlayerHealth", FindObjectOfType<LoseHealth>().CurrentHealth);
+
+        yield return new WaitForSeconds(pauseBeforeLoad);
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reload the same scene
+    }
+
 
     private IEnumerator LoadWinScene()
     {
