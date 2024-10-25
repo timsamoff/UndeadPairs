@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class LoseHealth : MonoBehaviour
 {
     [Header("Player Health")]
+    [SerializeField] private float currentHealth = 100f;
     [SerializeField] private float healthDecreasePercent = 10f;
     [SerializeField] private Slider healthBar;
     [SerializeField] private Image healthBarFill;
@@ -13,7 +14,8 @@ public class LoseHealth : MonoBehaviour
     [SerializeField] private Color damageFillColor = new Color(1f, 0f, 0f, 0.5f);  // Damage color
     [SerializeField] private float damageFillDuration = 0.5f;  // Damage display time
     [SerializeField] private float fillFadeTime = 0.5f;
-    private float currentHealth = 100f;
+
+    public float CurrentHealth => currentHealth;
 
     [Header("Settings")]
     [SerializeField] private CanvasGroup uiCanvasGroup;
@@ -31,6 +33,22 @@ public class LoseHealth : MonoBehaviour
 
     private void Start()
     {
+        if (PlayerPrefs.HasKey("PlayerHealth"))
+        {
+            currentHealth = PlayerPrefs.GetFloat("PlayerHealth");
+        }
+        else
+        {
+            PlayerPrefs.SetFloat("PlayerHealth", currentHealth);
+        }
+
+        if (healthBar != null)
+        {
+            healthBar.value = currentHealth / 100f;  // Update health bar only here
+        }
+
+        Debug.Log("Player health loaded: " + currentHealth);
+
         pauseScreen = FindObjectOfType<PauseScreen>();
 
         endGameAudio = GetComponent<EndGameAudio>();
@@ -66,15 +84,18 @@ public class LoseHealth : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        currentHealth = 100f;
+        /*currentHealth = 100f;
+        Debug.Log("Health reset to 100.");*/
 
         if (healthBar != null)
         {
             healthBar.value = currentHealth / 100f;
+            Debug.Log("HealthBar value after load: " + healthBar.value);
         }
         isDead = false;
         Time.timeScale = 1f;
-        Debug.Log("Health reset to 100.");
+
+        Debug.Log("OnSceneLoaded - Current Health: " + currentHealth);
     }
 
     public bool PracticeMode
@@ -88,6 +109,10 @@ public class LoseHealth : MonoBehaviour
         if (!practiceMode) // Health decreases when not in Practice Mode
         {
             currentHealth -= healthDecreasePercent;
+
+            PlayerPrefs.SetFloat("PlayerHealth", currentHealth);
+
+
             currentHealth = Mathf.Clamp(currentHealth, 0, 100);
 
             if (healthBar == null)
